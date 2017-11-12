@@ -87,6 +87,7 @@ const mutations = {
                 console.log(error);
             })
             state.userAuth = null;
+            state.userData = null;
         }
     }
 }
