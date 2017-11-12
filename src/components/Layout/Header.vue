@@ -10,12 +10,12 @@
         <ul class="navbar-nav mr-auto">
           <!-- Mobile menu -->
           <li class="nav-item sm" >
-            <div class="nav-profile" style="border-radius: 2px; margin-top: 5px; color: #DFDCE3; font-size: 22px;" v-if="userAuth">
+            <div class="nav-profile" style="border-radius: 2px; margin-top: 5px; color: #DFDCE3; font-size: 22px;" v-if="userData">
               <strong>{{ userAuth.displayName }}</strong>
             </div>
           </li>
           <li class="nav-item sm">
-            <div class="nav-point" style="border-radius: 2px; margin-top: 5px;" v-if="userAuth">
+            <div class="nav-point" style="border-radius: 2px; margin-top: 5px;" v-if="userData">
               <span><img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"> <strong>{{userData.point}}</strong></span>
             </div>
             <hr>
@@ -29,7 +29,7 @@
           </li>
 
           <!-- Mobile menu -->
-          <li class="nav-item sm" v-if="userAuth">
+          <li class="nav-item sm" v-if="userData">
             <hr>
             <a class="nav-link" style="cursor:pointer" @click="logout"><strong>SIGN OUT</strong></a>
           </li>
@@ -43,7 +43,7 @@
         </ul>
         
         <!-- Loggedin -->
-        <ul class="form-inline my-2 my-lg-0"  v-if="userAuth">
+        <ul class="form-inline my-2 my-lg-0"  v-if="userData">
 
           <!-- Point -->
           <li class="nav-item md">

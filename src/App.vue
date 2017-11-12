@@ -28,7 +28,8 @@ export default {
 <style>
 body, html {
   min-height: 100%;
-  background: #4ABDAC;
+  color: #DFDCE3;
+  /* background: #4ABDAC; */
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
