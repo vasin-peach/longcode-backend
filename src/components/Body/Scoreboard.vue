@@ -1,10 +1,10 @@
 <template>
-  <div>Landing Page</div>
+    <div>Scoreboard Page</div>
 </template>
 
 <script>
 export default {
-    name: 'landing'
+    name: 'scoreboard',
 }
 </script>
 

@@ -1,13 +1,20 @@
 <template>
-  <div>
+  <div class="container-fluid">
     <router-view></router-view>
   </div>
   
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
-    name: 'body'
+    name: 'body',
+    computed: {
+      ...mapState(['userAuth'])
+    },
+    methods: {
+      ...mapMutations(['auth']),
+    },
 }
 </script>
 
