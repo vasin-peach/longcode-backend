@@ -10,7 +10,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
     name: 'body',
     computed: {
-      ...mapState(['userAuth'])
+      ...mapState(['userAuth', 'userData'])
     },
     methods: {
       ...mapMutations(['auth']),

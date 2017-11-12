@@ -12,7 +12,8 @@ firebase.initializeApp(firebaseConfig);
 
 // Tutorial
 const state = {
-    userAuth: null
+    userAuth: null,
+    userData: null
 }
 const mutations = {
     // Firebase auth state
@@ -21,6 +22,29 @@ const mutations = {
         firebase.auth().onAuthStateChanged( function(user) {
             if (user) {
                 state.userAuth = user
+                firebase.database().ref('/users').orderByChild('email').equalTo(user.email).once('value').then(function(snapshot) {
+                    if (!snapshot.val()) {
+                        // Create user data in firebase
+                        const userData = {
+                            name: user.displayName,
+                            email: user.email,
+                            image: user.photoURL,
+                            uid: user.uid,
+                            point: 0,
+                            createdAt: firebase.database.ServerValue.TIMESTAMP
+                        }
+                        firebase.database().ref('/users').push(userData)
+                        firebase.database().ref('/users').orderByChild('email').equalTo(user.email).once('value').then(function(snapshot) {
+                            for (var i in snapshot.val()) {
+                                state.userData = snapshot.val()[i]
+                            }
+                        })
+                    } else {
+                        for (var i in snapshot.val()) {
+                            state.userData = snapshot.val()[i]
+                        }
+                    }
+                })
             }
         })
     },
@@ -29,9 +53,6 @@ const mutations = {
         firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then( function() {
             var provider = new firebase.auth.FacebookAuthProvider();
             return firebase.auth().signInWithPopup(provider).then(function() {
-
-
-                
                 swal("Signed in", "คุณเข้าสู่ระบบด้วยบัญชี facebook", "success");
             })
         }).catch (function(error) {

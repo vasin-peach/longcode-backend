@@ -16,7 +16,7 @@
           </li>
           <li class="nav-item sm">
             <div class="nav-point" style="border-radius: 2px; margin-top: 5px;" v-if="userAuth">
-              <span><img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"> <strong>5000</strong></span>
+              <span><img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"> <strong>{{userData.point}}</strong></span>
             </div>
             <hr>
           </li>
@@ -50,7 +50,7 @@
             <a class="nav-link">
               <div class="nav-point">
                 <img src="../../assets/icon/point.png" style="width: 38px; border-radius: 50%;">
-                <span>0</span>
+                <span>{{userData.point}}</span>
               </div>
             </a>
           </li>
@@ -68,7 +68,7 @@
               <div class="dropdown-divider"></div>
               <span class="dropdown-item">
                 <div class="nav-point">
-                  <span><img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"> <strong>5000</strong></span>
+                  <span><img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"> <strong>{{userData.point}}</strong></span>
                 </div>
               </span> 
               <div class="dropdown-divider"></div>
@@ -118,7 +118,7 @@ export default {
       // console.log(this.userAuth)
     },
     computed: {
-      ...mapState(['userAuth'])
+      ...mapState(['userAuth', 'userData'])
     },
     methods: {
       ...mapMutations(['logout', 'fbLogin']),
