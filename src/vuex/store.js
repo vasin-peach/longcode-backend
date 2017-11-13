@@ -31,6 +31,7 @@ const mutations = {
                             image: user.photoURL,
                             uid: user.uid,
                             point: 0,
+                            permission: 1,
                             createdAt: firebase.database.ServerValue.TIMESTAMP
                         }
                         firebase.database().ref('/users').push(userData)

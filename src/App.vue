@@ -47,7 +47,7 @@ export default {
 body, html {
   min-height: 100%;
   color: #DFDCE3;
-  /* background: #4ABDAC; */
+  background: #f2f2f2;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -58,6 +58,16 @@ body, html {
   padding-top: 85px;
   
 }
+@media only screen and (min-width: 767px) {
+  #app {
+    padding-top: 95px;
+  }
+}
+@media (max-width:992px) and (min-width:767px) {
+  #app {
+    padding-top: 120px;
+  }
+}​
 .ghost-button {
   cursor: pointer;
   background: none;

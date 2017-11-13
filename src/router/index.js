@@ -14,6 +14,9 @@ import Mytask from '@/components/Body/Mytask'
 import { mapState, mapMutations } from 'vuex'
 import firebase from 'firebase'
 
+// Admin
+import Admin from '@/components/Backend/Admin'
+
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -26,8 +29,9 @@ const router = new Router({
       },
       children: [
         { path: '/', component: Index, name:'index' },
-        { path: '/scoreboard', component: Scoreboard, name: 'scoreboard' },
-        { path: '/mytask', component: Mytask, name: 'mytask', meta: { requiresAuth: true} }
+        { path: '/scoreboard', component: Scoreboard, name: 'scoreboard', meta: { requiresAuth: true} },
+        { path: '/mytask', component: Mytask, name: 'mytask', meta: { requiresAuth: true} },
+        { path: '/admin', component: Admin, name: 'admin', meta: { requiresAuth: true, requiresAdmin: true} }
       ],
     }
   ],
@@ -39,7 +43,9 @@ router.beforeEach((to, from, next) => {
       if (user) {
         next()
       } else { next({ path: '/' }) }
-    })  
+    })
+  } else if (to.matched.some(record => record.meta.requiresAuth)) {
+    
   } else {
     next()
   }

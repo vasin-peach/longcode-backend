@@ -21,14 +21,21 @@
             <hr>
           </li>
 
+          <!-- Pc menu -->
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'scoreboard'}"><strong><i class="fa fa-star" aria-hidden="true"></i> SCORE BOARD</strong></router-link>
+            <router-link class="nav-link" :to="{ name: 'scoreboard'}"><strong :class="{ 'disabled': !userAuth }"><i class="fa fa-star" aria-hidden="true"></i> SCORE BOARD</strong></router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'mytask'}"><strong :class="{ 'disabled': !userAuth }"><i class="fa fa-code" aria-hidden="true"></i> MY TASK</strong></router-link>
           </li>
 
           <!-- Mobile menu -->
+          <li class="nav-item sm">
+            <router-link class="nav-link" :to="{ name: 'index'}"><strong :class="{ 'disabled': !userAuth }"> OPTION</strong></router-link>
+          </li>
+          <li class="nav-item sm" v-if="userData && userData.permission > 2">
+            <router-link class="nav-link" :to="{ name: 'admin'}"><strong> ADMIN</strong></router-link>
+          </li>
           <li class="nav-item sm" v-if="userData">
             <hr>
             <a class="nav-link" style="cursor:pointer" @click="logout"><strong>SIGN OUT</strong></a>
@@ -73,6 +80,7 @@
               </span> 
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">OPTION</a>
+              <router-link class="dropdown-item" :to="{ name: 'admin'}" v-if="userData.permission > 2">ADMIN</router-link>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" style="cursor:pointer" @click="logout">SIGN OUT</a>
             </div>
@@ -137,7 +145,8 @@ export default {
   display: none;
 }
 hr {
-  background: #DFDCE3;
+  background: #f2f2f2;
+  border: 1px solid #f2f2f2;
 }
 .navbar {
   background: #18121E;
@@ -206,7 +215,7 @@ hr {
 
 
 /* Mobile */
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 767px) {
   .navbar {
     text-align: right;
   }
