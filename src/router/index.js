@@ -38,11 +38,7 @@ router.beforeEach((to, from, next) => {
     firebase.auth().onAuthStateChanged( function(user) {
       if (user) {
         next()
-      } else {
-        next({
-          path: '/'
-        })
-      }
+      } else { next({ path: '/' }) }
     })  
   } else {
     next()

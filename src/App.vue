@@ -1,7 +1,25 @@
 <template>
   <div id="app">
-    <router-view name="header"></router-view>
-    <router-view name="body"></router-view>
+    <transition name="loading-transition">
+      <div>
+        <router-view name="header"></router-view>
+        <router-view name="body"></router-view>
+      </div>
+    </transition>
+    <transition name="loading-transition">
+      <div class="page-loading" v-if="userAuth && !userData">
+        <div class="page-loading-fade">
+        </div>
+        <div class="page-loading-icon">
+          <img src="./assets/icon/icon.png">
+        </div>
+        <div class="page-loading-spiner">
+          <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><br>
+          <span>Loading</span>
+        </div>
+      </div>
+    </transition>
+    
   </div>
 </template>
 
@@ -10,7 +28,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'app',
   computed: {
-    ...mapState(['userAuth']),
+    ...mapState(['userAuth', 'userData']),
   },
   created() {
     // Auth autoload
@@ -58,4 +76,64 @@ body, html {
   box-shadow: none;
 }
 
+.page-loading {
+  min-height: 100%;
+}
+  .page-loading-spiner {
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -52%);
+    position: absolute;
+    top: 48%;
+    left: 50%;
+  }
+    .page-loading .fa-spin {
+      font-size: 100px;
+      color:  #ccc;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 10px;
+      box-shadow: 0 0 1px 3px #984B43;
+      border-radius: 50%;
+    }
+    .page-loading span {
+      color: #DFDCE3;
+    }
+    .fa-spin {
+      -webkit-animation: fa-spin 1s infinite ease;
+      animation: fa-spin 1s infinite ease;
+    }
+
+  .page-loading-icon {
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    background: #DFDCE3;
+    border-radius: 50%;
+    padding: 10px;
+  }
+    .page-loading-icon img{
+      width: 60px;
+    }
+  .page-loading-fade {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    background: rgba(24, 18, 30, 0.9);
+  }
+
+
+/* Transition */
+.loading-transition-enter-active {
+  transition: all 0.2s ease;
+}
+.loading-transition-leave-active {
+  transition: all 0.5s ease;
+}
+.loading-transition-enter, .loading-transition-leave-to {
+  opacity: 0;
+}
 </style>

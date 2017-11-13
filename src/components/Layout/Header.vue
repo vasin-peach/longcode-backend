@@ -114,6 +114,11 @@
 import { mapState, mapMutations } from 'vuex'
 export default {
     name: 'header',
+    mounted() {
+      $('.nav-link').on('click', function() {
+        $('.navbar-collapse').collapse('hide');
+      })
+    },
     created() {
       // console.log(this.userAuth)
     },
@@ -145,6 +150,9 @@ hr {
 }
 
 /* Nav profile */
+.nav-profile {
+  cursor: pointer;
+}
 .nav-profile, .nav-point {
   background: #233237;
   padding: 2px 10px 2px 2px;
