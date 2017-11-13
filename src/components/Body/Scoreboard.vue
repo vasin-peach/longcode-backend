@@ -86,16 +86,17 @@ export default {
       ...mapState(['userAuth', 'userData'])
     },
     created() {
-      this.scoreboardBest()
-      this.scoreBest.reverse();
+        this.scoreboardBest()
     },
     methods: {
         scoreboardBest() {
             const this_ = this
             firebase.database().ref('users/').orderByChild('point').limitToLast(30).on('child_added', function(snapshot) {
                 this_.scoreBest = this_.scoreBest.concat(snapshot.val())
+                this_.scoreBest.reverse();
             })
-        },
+            
+        }
     }
 }
 </script>
