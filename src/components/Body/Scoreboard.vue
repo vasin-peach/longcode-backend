@@ -78,8 +78,7 @@ export default {
     name: 'scoreboard',
     data() {
         return {
-            scoreBest: [],
-            scoreTable: []
+            scoreBest: []
         }
     },
     computed: {
@@ -88,12 +87,14 @@ export default {
     created() {
         this.scoreboardBest()
     },
+    mounted() {
+        this.scoreBest.reverse()
+    },
     methods: {
         scoreboardBest() {
             const this_ = this
             firebase.database().ref('users/').orderByChild('point').limitToLast(30).on('child_added', function(snapshot) {
                 this_.scoreBest = this_.scoreBest.concat(snapshot.val())
-                this_.scoreBest.reverse();
             })
             
         }
