@@ -46,6 +46,26 @@ export default {
 </script>
 
 <style>
+a {
+  text-decoration: none !important;
+}
+.button {
+  cursor: pointer;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 13px;
+  background: #D94B3F;
+  color: #f2f2f2;
+  -webkit-transition: box-shadow 0.3s;
+  -moz-transition: box-shadow 0.3s;
+  transition: box-shadow 0.3s;
+}
+  .button:hover {
+    box-shadow: 0 0 1px 1px #18121E;
+  }
+  .button:focus {
+    outline: none;
+  }
 body, html {
   min-height: 100%;
   color: #DFDCE3;

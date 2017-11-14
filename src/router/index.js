@@ -16,6 +16,8 @@ import firebase from 'firebase'
 
 // Admin
 import Admin from '@/components/Backend/Admin'
+import adminUser from '@/components/Backend/AdminUser'
+import adminTask from '@/components/Backend/AdminTask'
 
 Vue.use(Router)
 const router = new Router({
@@ -31,7 +33,12 @@ const router = new Router({
         { path: '/', component: Index, name:'index' },
         { path: '/scoreboard', component: Scoreboard, name: 'scoreboard', meta: { requiresAuth: true} },
         { path: '/mytask', component: Mytask, name: 'mytask', meta: { requiresAuth: true} },
-        { path: '/admin', component: Admin, name: 'admin', meta: { requiresAuth: true, requiresAdmin: true} }
+        { path: '/admin', component: Admin, name: 'admin', meta: { requiresAuth: true, requiresAdmin: true}, children: 
+          [
+            { path: 'user', component: adminUser, name: 'adminUser', meta: { requiresAdmin: true} },
+            { path: 'task', component: adminTask, name: 'adminTask', meta: { requiresAdmin: true} }
+          ]
+        }
       ],
     }
   ],
@@ -44,8 +51,12 @@ router.beforeEach((to, from, next) => {
         next()
       } else { next({ path: '/' }) }
     })
-  } else if (to.matched.some(record => record.meta.requiresAuth)) {
-    
+  } else if (to.matched.some(record => record.meta.requiresAdmin)) {
+    firebase.auth().onAuthStateChanged( function(user) {
+      if (user.permission > 2) {
+        next()
+      } else { next({ path: '/' }) }
+    })
   } else {
     next()
   }
