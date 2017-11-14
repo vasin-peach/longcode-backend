@@ -1,6 +1,10 @@
 <template>
   <div>
-      Admin Page
+      <div class="row" v-if="userAuth && userData && userData.permission > 2">
+        <div class="admin col-lg-9 col-md-11 col-sm-11 col-xs-11 mx-auto">
+          Admin Panel
+        </div>
+      </div>
   </div>
 </template>
 

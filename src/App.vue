@@ -15,7 +15,9 @@
         </div>
         <div class="page-loading-spiner">
           <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i><br>
-          <span>Loading</span>
+        </div>
+        <div class="page-loading-label">
+          Loading...
         </div>
       </div>
     </transition>
@@ -92,9 +94,9 @@ body, html {
   .page-loading-spiner {
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Safari */
-    transform: translate(-50%, -52%);
+    transform: translate(-50%, -50%);
     position: absolute;
-    top: 48%;
+    top: 50%;
     left: 50%;
   }
     .page-loading .fa-spin {
@@ -102,7 +104,6 @@ body, html {
       color:  #ccc;
       height: 100%;
       width: 100%;
-      margin-bottom: 10px;
       box-shadow: 0 0 1px 3px #984B43;
       border-radius: 50%;
     }
@@ -119,7 +120,7 @@ body, html {
     -webkit-transform: translate(-50%, -50%); /* Safari */
     transform: translate(-50%, -50%);
     position: absolute;
-    top: 45%;
+    top: 50%;
     left: 50%;
     background: #DFDCE3;
     border-radius: 50%;
@@ -128,6 +129,17 @@ body, html {
     .page-loading-icon img{
       width: 60px;
     }
+
+  .page-loading-label {
+    -ms-transform: translate(-50%, -50%); /* IE 9 */
+    -webkit-transform: translate(-50%, -50%); /* Safari */
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 70px;
+    color: #DFDCE3;
+  }
   .page-loading-fade {
     position: absolute;
     top: 0; bottom: 0;

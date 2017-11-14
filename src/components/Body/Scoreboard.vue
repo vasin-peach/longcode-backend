@@ -5,19 +5,21 @@
                 <span><strong style="color: #233237;">TOP 3 USER</strong></span>
                 <hr>
                 <div class="row text-center">
-                    <div class="col-md-4">
-                        <div class="card scoreboard-box-first">
-                            <div class="card-header">
-                                <strong>1st PLACE <span style="color:#EAC67A"><i class="fa fa-trophy" aria-hidden="true"></i></span></strong>
-                            </div>
-                            <div class="card-block">
-                                <div style="padding: 10px;"><img :src="scoreBest[0].image" style="width: 30%; border-radius: 50%; border: 5px solid #18121E;"></div>
-                                <div><strong>TOTAL POINT :</strong> <strong style="color: #EAC67A">{{ scoreBest[0].point }}</strong></div>
-                                <hr style="border-color: #f2f2f2">
-                                <div style="padding-bottom: 10px;"><strong style="color: #DFDCE3; font-size: 15px;">{{ scoreBest[0].name }}</strong></div>
+                    <transition name="leader-box1-load">
+                        <div class="col-md-4">
+                            <div class="card scoreboard-box-first">
+                                <div class="card-header">
+                                    <strong>1st PLACE <span style="color:#EAC67A"><i class="fa fa-trophy" aria-hidden="true"></i></span></strong>
+                                </div>
+                                <div class="card-block">
+                                    <div style="padding: 10px;"><img :src="scoreBest[0].image" style="width: 30%; border-radius: 50%; border: 5px solid #18121E;"></div>
+                                    <div><strong>TOTAL POINT :</strong> <strong style="color: #EAC67A">{{ scoreBest[0].point }}</strong></div>
+                                    <hr style="border-color: #f2f2f2">
+                                    <div style="padding-bottom: 10px;"><strong style="color: #DFDCE3; font-size: 15px;">{{ scoreBest[0].name }}</strong></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </transition>
                     <div class="col-md-4">
                         <div class="card scoreboard-box-second">
                             <div class="card-header">
@@ -171,6 +173,25 @@ export default {
         background: #ececec;
     }
 
-    @media only screen and (max-width: 992px) {
+
+
+    /* Vue */
+    .leader-box1-load-enter-active {
+        animation: leader-loadin 0.5s;
+    }
+    .bounce-leave-active {
+        animation: leader-loadin 0.5s reverse;
+    }
+    @keyframes leader-loadin {
+        0% {
+            opacity: 0;
+            /* transform: scale(0); */
+        }
+        50% {
+            opacity: 0.5;
+        }
+        100% {
+            opacity: 0.2;
+        }
     }
 </style>
