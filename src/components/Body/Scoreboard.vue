@@ -58,7 +58,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(score, key) in scoreBest" >
+                        <tr v-for="(score, key) in scoreBest">
                             <td width="10%">{{key+1}}</td>
                             <td width="80%"><img :src="score.image" style="width: 40px; border-radius: 50%; padding-right: 5px;"> {{score.name}}</td>
                             <td width="10%" class="text-center">{{score.point}}</td>
@@ -82,7 +82,7 @@ export default {
         }
     },
     computed: {
-      ...mapState(['userAuth', 'userData'])
+      ...mapState(['userAuth', 'userData']),
     },
     created() {
         this.scoreboardBest()
@@ -90,11 +90,16 @@ export default {
     methods: {
         scoreboardBest() {
             const this_ = this
-            firebase.database().ref('users/').orderByChild('point').limitToLast(30).on('child_added', function(snapshot) {
-                this_.scoreBest = this_.scoreBest.concat(snapshot.val())
+            var allScore = []
+            firebase.database().ref('users/').orderByChild('point').limitToLast(30).on('value', function(snapshot, error) {
+                snapshot.forEach((resScore) => {
+                    const score = resScore.val()
+                    allScore.push(score)
+                })
+                this_.scoreBest = allScore.reverse()
             })
         }
-    }
+    },
 }
 </script>
 
