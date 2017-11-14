@@ -9,23 +9,23 @@
       <form v-on:submit.prevent="taskAdd">
           <div class="form-group">
               <label for="taskAddForm">Title:</label>
-              <input v-model="taskName" name="taskName" type="text" class="form-control" placeholder="ex: ลองกรอกสิ."  >
+              <input v-model="taskName" name="taskName" type="text" class="form-control" placeholder="ex: ลองกรอกสิ."  required>
           </div>
           <div class="form-group">
               <label>Detail:</label>
-              <textarea  v-model="taskDetail" name="taskDetail" class="form-control" rows="3" placeholder="ex: แสดงผลข้อมูลจากผลรวมที่ผู้ใช้กรอกไปสี่ครั้ง."  ></textarea>
+              <textarea  v-model="taskDetail" name="taskDetail" class="form-control" rows="3" placeholder="ex: แสดงผลข้อมูลจากผลรวมที่ผู้ใช้กรอกไปสี่ครั้ง."  required></textarea>
           </div>
           <div class="row">
               <div class="col-sm-6">
                   <div class="form-group">
                       <label>Input:</label>
-                      <input  v-model="taskInput" name="taskInput" type="text" class="form-control" placeholder="ex: 1, 2, 3, 4 | ถ้ามี input หลายตัวให้คั่นด้วย ','"  >
+                      <input  v-model="taskInput" name="taskInput" type="text" class="form-control" placeholder="ex: 1, 2, 3, 4 | ถ้ามี input หลายตัวให้คั่นด้วย ','"  required>
                   </div>
               </div>
               <div class="col-sm-6">
                   <div class="form-group">
                       <label>Output:</label>
-                      <input  v-model="taskOutput" name="taskOutput" type="text" class="form-control" placeholder="ex: 11"  >
+                      <input  v-model="taskOutput" name="taskOutput" type="text" class="form-control" placeholder="ex: 11"  required>
                   </div>
               </div>
           </div>
@@ -47,9 +47,24 @@
       <tbody>
         <tr v-for="(task, num) in tasks">
           <td width="10%">{{num+1}}</td>
-          <td width="75%">{{task.name}}</td>
+          <td width="75%" style="cursor: pointer;" data-toggle="collapse" :data-target="'#' + task.createdAt" aria-expanded="false" aria-controls="#admin-task-view">
+            <div><strong>{{task.name}}</strong></div>
+            <div class="collapse" :id="task.createdAt">
+              <div class="fa-1x mt-1" style="color: #595959">{{task.detail}}</div>
+              <hr style="border: 0.5px solid #ccc; margin: 10px 0;">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="fa-1x mt-1">Input: <span style="color: #595959">{{task.input}}</span></div>
+                </div>
+                <div class="col-md-6">
+                  <div class="fa-1x mt-1">Output: <span style="color: #595959">{{task.output}}</span></div>
+                </div>
+              </div>
+              <br>
+            </div>
+          </td>
           <td width="15%" class="text-center">
-            <a style="color:#D94B3F; cursor: pointer;" @click="taskRemove(task.createdAt)"><i class="fa fa-times" aria-hidden="true"></i></a>
+            <a style="color:#D94B3F; cursor: pointer;" @click="taskRemove(task.createdAt)"><i class="fa fa-2x fa-times" aria-hidden="true"></i></a>
           </td>
         </tr>
       </tbody>

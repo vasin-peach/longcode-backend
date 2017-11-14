@@ -18,7 +18,6 @@ import firebase from 'firebase'
 import Admin from '@/components/Backend/Admin'
 import adminUser from '@/components/Backend/AdminUser'
 import adminTask from '@/components/Backend/AdminTask'
-
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
