@@ -34,7 +34,7 @@
             <router-link class="nav-link" :to="{ name: 'index'}"><strong :class="{ 'disabled': !userAuth }"> OPTION</strong></router-link>
           </li>
           <li class="nav-item sm" v-if="userData && userData.permission > 2">
-            <router-link class="nav-link" :to="{ name: 'admin'}"><strong> ADMIN</strong></router-link>
+            <router-link class="nav-link" :to="{ name: 'adminTask'}"><strong> ADMIN</strong></router-link>
           </li>
           <li class="nav-item sm" v-if="userData">
             <hr>
@@ -80,7 +80,7 @@
               </span> 
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="#">OPTION</a>
-              <router-link class="dropdown-item" :to="{ name: 'admin'}" v-if="userData.permission > 2">ADMIN</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'adminTask'}" v-if="userData.permission > 2">ADMIN</router-link>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" style="cursor:pointer" @click="logout">SIGN OUT</a>
             </div>

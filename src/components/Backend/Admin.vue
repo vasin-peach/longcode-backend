@@ -6,14 +6,14 @@
             <span><strong style="color: #233237;">ADMIN PANEL</strong></span>
             <hr>
             <div class="row text-center">
-              <router-link class="col-md-6" :to="{ name: 'adminUser'}" style="color: #DFDCE3; text-decoration: none;">
+              <router-link class="col-md-6 mb-1" :to="{ name: 'adminUser'}" style="color: #DFDCE3; text-decoration: none;">
                 <div class="card admin-button" style="background: #233237;">
                   <div class="card-header">
                     <strong style="text-decoration: none"><i class="fa fa-users" aria-hidden="true"></i> User Mangement</strong>
                   </div>
                 </div>
               </router-link>
-              <router-link class="col-md-6" :to="{ name: 'adminTask'}" style="color: #233237; text-decoration: none;">
+              <router-link class="col-md-6 mt-1" :to="{ name: 'adminTask'}" style="color: #233237; text-decoration: none;">
                 <div class="card admin-button" style="background: #EAC67A">
                   <div class="card-header">
                     <strong><i class="fa fa-code" aria-hidden="true"></i> Task Mangement</strong>
