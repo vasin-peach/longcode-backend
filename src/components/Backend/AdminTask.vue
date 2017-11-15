@@ -1,6 +1,6 @@
 <template>
   <div class="admin-task">
-    <!-- <router-link :to="{ name: 'taskAdd'}"><strong style="color: #D94B3F;"><i class="fa fa-plus" aria-hidden="true"></i> Add task</strong></router-link> -->
+    <!-- <router-link :to="{ name: 'taskAdd'}"><strong style="color: #D94B3F;"><i class="fa fa-plus" aria-hidden="true"></i> </strong></router-link> -->
     <strong style="color: #D94B3F; cursor:pointer;" data-toggle="collapse" data-target="#admin-task-add" aria-expanded="false" aria-controls="#admin-task-add"><i class="fa fa-plus" aria-hidden="true"></i> Add task</strong>
     <br><br>
     <!-- <router-view></router-view> -->
@@ -15,22 +15,41 @@
               <label>Detail:</label>
               <textarea  v-model="taskDetail" name="taskDetail" class="form-control" rows="3" placeholder="ex: แสดงผลข้อมูลจากผลรวมที่ผู้ใช้กรอกไปสี่ครั้ง."  required></textarea>
           </div>
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Input:</label>
-                      <input  v-model="taskInput" name="taskInput" type="text" class="form-control" placeholder="ex: 1, 2, 3, 4 | ถ้ามี input หลายตัวให้คั่นด้วย ','"  required>
-                  </div>
+
+
+          <strong style="color: #D94B3F; cursor:pointer;" @click="addCase"><i class="fa fa-plus" aria-hidden="true"></i> Add testcase</strong>
+          <div v-for="count in testcase">
+
+            <div class="card card-header add-testcase-header">
+              <div class="row">
+                <div class="col">
+                  Case {{count}}
+                </div>
+                <div class="col text-right">
+                  <i class="fa fa-times btn-delete" aria-hidden="true" @click="removeCase" v-if="count != 1"></i>
+                </div>
               </div>
-              <div class="col-sm-6">
-                  <div class="form-group">
-                      <label>Output:</label>
-                      <input  v-model="taskOutput" name="taskOutput" type="text" class="form-control" placeholder="ex: 11"  required>
-                  </div>
+            </div>
+            <div class="add-testcase-body">
+              <div class="row">
+                <div class="col-sm-6" >
+                    <div class="form-group">
+                        <label>Input:</label>
+                        <input v-model="taskInput[count]" name="taskInput" type="text" class="form-control" placeholder="ex: 1, 2, 3, 4 | ถ้ามี input หลายตัวให้คั่นด้วย ','"  required>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label>Output:</label>
+                        <input v-model="taskOutput[count]" name="taskOutput" type="text" class="form-control" placeholder="ex: 11"  required>
+                    </div>
+                </div>
               </div>
+            </div>
+
           </div>
-          <button type="submit" class="button">Add task</button>
-          <br><br><hr>
+
+          <br><button type="submit" class="button">Add task</button><br><br><hr>
       </form>
       <br><br>
     </div>
@@ -52,13 +71,29 @@
             <div class="collapse" :id="task.createdAt">
               <div class="fa-1x mt-1" style="color: #595959">{{task.detail}}</div>
               <hr style="border: 0.5px solid #ccc; margin: 10px 0;">
-              <div class="row">
-                <div class="col-md-6">
+              <div class="row" v-for="(currentCase, numCase) in task.testcase">
+                <div class="col">
+                  <div class="card card-header view-testcase-header">Case {{numCase}}</div>
+                  <div class="view-testcase-body">
+                    <div class="row">
+                      <div class="col-9">
+                        Input: {{currentCase.input}}
+                        
+                      </div>
+                      <div class="col-3 text-right pr-4">
+                        Output: {{currentCase.output}}
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+                
+                <!-- <div class="col-md-6">
                   <div class="fa-1x mt-1">Input: <span style="color: #595959">{{task.input}}</span></div>
                 </div>
                 <div class="col-md-6">
                   <div class="fa-1x mt-1">Output: <span style="color: #595959">{{task.output}}</span></div>
-                </div>
+                </div> -->
               </div>
               <br>
             </div>
@@ -85,8 +120,9 @@ export default {
       tasks: null,
       taskName: null,
       taskDetail: null,
-      taskInput: null,
-      taskOutput: null
+      taskInput: {},
+      taskOutput: {},
+      testcase: 1,
     }
   },
   computed: {
@@ -97,6 +133,17 @@ export default {
   },
   methods: {
     ...mapMutations(['fbLogin', 'gitLogin', 'logout']),
+    addCase() {
+      if (this.testcase < 10) {
+        this.testcase ++;
+      }
+    },
+    removeCase() {
+      if (this.testcase > 1) {
+         this.testcase --;
+      }
+    },
+
     taskLoad() {
       const this_ = this
       var allTask = []
@@ -133,20 +180,22 @@ export default {
       })
     },
     taskAdd() {
-        // Input split and filter
-        this.taskInput = this.taskInput.split(',')
-        var taskInputFilter = []
-        for (var i in this.taskInput) {
-            taskInputFilter.push(this.taskInput[i].replace(/^\s+|\s+$/g, ""))
+      var taskInput = this.taskInput
+      var taskOutput = this.taskOutput
+      var testcase = []
+      for (var input in taskInput) {
+        var currentInput = taskInput[input].split(',')
+        var currentCaseInput = []
+        for (var i in currentInput) {
+          currentCaseInput.push(currentInput[i].replace(/^\s+|\s+$/g, ""))
         }
-        this.taskInput = taskInputFilter
-
+        testcase.push({'input': currentCaseInput, 'output': taskOutput[input]})
+      }
         var addTaskData = {
             'name': this.taskName,
             'detail': this.taskDetail,
-            'input': this.taskInput,
-            'output': this.taskOutput,
-            'send:': 0,
+            'testcase': testcase,
+            'send': 0,
             'pass': 0,
             'createdAt': firebase.database.ServerValue.TIMESTAMP,
             'status': 'enable'
@@ -156,8 +205,9 @@ export default {
         this.taskLoad()
         this.taskName = null,
         this.taskDetail = null,
-        this.taskInput = null,
-        this.taskOutput = null
+        this.testcase = 1,
+        this.taskInput = {},
+        this.taskOutput = {}
         $('#admin-task-add').collapse('hide')
     }
   }
@@ -172,5 +222,34 @@ export default {
   }
   .admin-task tr:nth-child(even) {
     background: #ececec;
+  }
+
+  .add-testcase-header, .view-testcase-header {
+    font-size: 20px;
+    background: #3c555d;
+    color: #DFDCE3;
+    margin: 5px 0;
+  }
+  .view-testcase-header {
+    background: #5a7f8c;
+    font-size: 16px;
+    padding: 5px;
+  }
+  .add-testcase-body {
+    padding: 0 5px;
+    margin-bottom: 5px;
+    border-radius: 3px;
+  }
+
+  .btn-delete {
+    cursor: pointer;
+    font-size: 20px;
+    color: #D94B3F;
+    -webkit-transition: color 0.3s;
+    -moz-transition: color 0.3s;
+    transition: color 0.3s;
+  }
+  .btn-delete:hover {
+    color: #6a1c15;
   }
 </style>

@@ -13,7 +13,7 @@
                   </div>
                 </div>
               </router-link>
-              <router-link class="col-md-6 mt-1" :to="{ name: 'adminTask'}" style="color: #233237; text-decoration: none;">
+              <router-link class="col-md-6 mb-1" :to="{ name: 'adminTask'}" style="color: #233237; text-decoration: none;">
                 <div class="card admin-button" style="background: #EAC67A">
                   <div class="card-header">
                     <strong><i class="fa fa-code" aria-hidden="true"></i> Task Mangement</strong>
