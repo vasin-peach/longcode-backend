@@ -187,9 +187,22 @@ export default {
         var currentInput = taskInput[input].split(',')
         var currentCaseInput = []
         for (var i in currentInput) {
-          currentCaseInput.push(currentInput[i].replace(/^\s+|\s+$/g, ""))
+          var currentI = currentInput[i].replace(/^\s+|\s+$/g, "")
+          if (currentI.startsWith('"') && currentI.endsWith('"')) {
+            currentI = String(currentI).replace(/['"]+/g, '')
+          } else if(!isNaN(currentI)) {
+            currentI = parseFloat(currentI)
+          }
+          currentCaseInput.push(currentI)
         }
-        testcase.push({'input': currentCaseInput, 'output': taskOutput[input]})
+
+        var currentOutput = taskOutput[input].replace(/^\s+|\s+$/g, "")
+        if (currentOutput.startsWith('"') && currentOutput.endsWith('"')) {
+          currentOutput = String(currentOutput).replace(/['"]+/g, '')
+        } else if(!isNaN(currentOutput)) {
+           currentOutput = parseFloat(currentOutput)
+        }
+        testcase.push({'input': currentCaseInput, 'output': currentOutput})
       }
         var addTaskData = {
             'name': this.taskName,
