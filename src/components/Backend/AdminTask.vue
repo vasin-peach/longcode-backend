@@ -76,9 +76,6 @@
                   </div>
                 </div>
               </div>
-              {{  taskInputName }}
-              {{  taskInputValue }}
-
               <hr class="hr-sm">
               <div class="text-center">
                 <button type="submit" class="btn-lg btn-danger pointer bg-salmon-1"><i class="fa fa-plus" aria-hidden="true"></i> ADD TASK</button>
@@ -110,21 +107,16 @@
                   <div class="card card-header view-testcase-header">Case {{numCase}}</div>
                   <div class="view-testcase-body">
                     <div>                 
-                      Input: {{currentCase.input}}
+                      Input:
+                      <div v-for="currentInput in currentCase.input">
+                        {{ currentInput }}
+                      </div>
                       <hr class="hr-sm">
-                      Output: {{currentCase.output}}
+                      Output: {{currentCase.output}} <br><br>
                     </div>
                   </div>
                 </div>
-                
-                <!-- <div class="col-md-6">
-                  <div class="fa-1x mt-1">Input: <span style="color: #595959">{{task.input}}</span></div>
-                </div>
-                <div class="col-md-6">
-                  <div class="fa-1x mt-1">Output: <span style="color: #595959">{{task.output}}</span></div>
-                </div> -->
               </div>
-              <br>
             </div>
           </td>
           <td width="15%" class="text-center">
@@ -221,8 +213,6 @@ export default {
       })
     },
     taskAdd() {
-
-
       var testcase = []
       for (var x=1; x<this.testcase + 1; x++) { // all testcase
         var allInput = []
@@ -243,6 +233,7 @@ export default {
             }
             dictInput[inputName] = filterValue
             allInput.push(dictInput)
+            console.log(dictInput, allInput)
           }
         }
         testcase.push({'input': allInput, 'output': this.taskOutput[x]})
@@ -256,8 +247,6 @@ export default {
         'createdAt': firebase.database.ServerValue.TIMESTAMP,
         'status': 'enable'
       }
-
-
       firebase.database().ref('/tasks').push(addTaskData) // push data to firebase
       swal("Added", "เพิ่ม Task เข้าสู่ระบบ", "success")
       this.taskLoad() //refresh task
@@ -270,7 +259,6 @@ export default {
       this.taskInputName = {},
       this.taskInputValue = {}
       $('#admin-task-add-modal').modal('hide');
-
     }
   }
 }
