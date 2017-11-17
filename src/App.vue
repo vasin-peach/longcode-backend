@@ -46,6 +46,7 @@ export default {
 </script>
 
 <style>
+/* App css edit */
 a {
   text-decoration: none !important;
 }
@@ -66,6 +67,27 @@ a {
   .button:focus {
     outline: none;
   }
+input, textarea, button {
+  border-radius: 3px !important;
+}
+  input:focus, textarea:focus {
+    border-color: #EAC67A !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  button:focus {
+    border-color: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+
+
+
+
+
 body, html {
   min-height: 100%;
   color: #DFDCE3;
@@ -166,6 +188,32 @@ body, html {
     left: 0; right: 0;
     background: rgba(24, 18, 30, 0.9);
   }
+
+
+/* Color */
+.salmon-1 {
+  color: #D94B3F !important;
+}
+.salmon-2 {
+  color: #ea9c95 !important;
+}
+.pointer {
+  cursor: pointer !important; 
+}
+
+/* Bg */
+.bg-salmon-1 {
+  background: #D94B3F !important;
+}
+.bg-salmon-2 {
+  background: #ea9c95 !important;
+}
+
+/* Hr */
+.hr-sm {
+  border: 0.7px solid #e0e9eb !important;
+  box-shadow: 0 0.2px 0 0 #b1c7ce;
+}
 
 
 /* Transition */
