@@ -24,6 +24,13 @@ const mutations = {
                 state.userAuth = user
                 firebase.database().ref('/users').orderByChild('email').equalTo(user.email).once('value').then(function(snapshot) {
                     if (!snapshot.val()) {
+                        if (!user.photoURL) {
+                            user.photoURL = 'https://applech2.com/wp-content/uploads/2017/10/macOS-Guest-user-logo-icon.jpg'
+                        }
+                        if (!user.displayName) {
+                            user.displayName = user.email
+                        }
+                        console.log(user)
                         // Create user data in firebase
                         const userData = {
                             name: user.displayName,

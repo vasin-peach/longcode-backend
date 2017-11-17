@@ -47,6 +47,9 @@ export default {
 
 <style>
 /* App css edit */
+* {
+  font-family: 'Mitr', 'FontAwesome', sans-serif !important;
+}
 a {
   text-decoration: none !important;
 }
