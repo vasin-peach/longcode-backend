@@ -5,7 +5,9 @@ import App from './App'
 import router from './router'
 import store from './vuex/store'
 import VeeValidate from 'vee-validate'
+import VueCodeMirror from 'vue-codemirror'
 
+Vue.use(VueCodeMirror)
 Vue.use(VeeValidate)
 Vue.config.productionTip = false
 

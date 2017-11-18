@@ -25,6 +25,8 @@ import Challenges from '@/components/Course/Challenges'
 import Practice from '@/components/Course/Practice'
 import Tournaments from '@/components/Course/Tournaments'
 
+import PracticeTask from '@/components/Course/PracticeTask'
+
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -46,6 +48,7 @@ const router = new Router({
           ]
         },
         { path: '/practice', component: Practice, name: 'practice', meta: { requiresAuth: true} },
+        { path: '/practice/:taskId', component: PracticeTask, name: 'practiceTask', meta: { requiresAuth: true } },
         { path: '/practice', component: Challenges, name: 'challenges', meta: { requiresAuth: true} },
         { path: '/practice', component: Tournaments, name: 'tournaments', meta: { requiresAuth: true} },
         { path: '/practice', component: Aracde, name: 'aracde', meta: { requiresAuth: true} },

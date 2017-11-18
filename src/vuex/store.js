@@ -13,12 +13,12 @@ firebase.initializeApp(firebaseConfig);
 // Tutorial
 const state = {
     userAuth: null,
-    userData: null
+    userData: null,
+    practiceList: null
 }
 const mutations = {
     // Firebase auth state
     auth(state) {
-        
         firebase.auth().onAuthStateChanged( function(user) {
             if (user) {
                 state.userAuth = user
@@ -97,6 +97,11 @@ const mutations = {
             state.userAuth = null;
             state.userData = null;
         }
+    },
+    practiceLoad(state) {
+        firebase.database().ref('/tasks').orderByChild('createdAt').once('value').then(function(snapshot) {
+            state.practiceList = snapshot.val()
+        })
     }
 }
 

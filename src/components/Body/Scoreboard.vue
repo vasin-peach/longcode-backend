@@ -106,7 +106,7 @@ export default {
 </script>
 
 <style>
-    .scoreboard hr {
+    hr {
         border: 1px solid #737373;
     }
     .scoreboard .card {

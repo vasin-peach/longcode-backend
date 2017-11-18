@@ -2,7 +2,7 @@
   <!-- Logged in -->
   <div v-if="userAuth && userData">
     <div class="row justify-content-center">
-      <div class="index-landing col-md-11 col-lg-11">
+      <div class="index-landing col-md-11 col-lg-9">
         <div class="row">
 
           <!-- Pratice -->
@@ -27,7 +27,7 @@
 
           <!-- Challenges -->
           <div class="col-lg-6">
-            <div class="card card-challenges disabled">
+            <div class="card card-challenges">
               <div class="card-block">
                 <div class="card-block-header card-block-challenges-header">
                   Challenges
@@ -46,7 +46,7 @@
 
           <!-- Tournaments -->
           <div class="col-lg-6">
-            <div class="card card-tournaments disabled">
+            <div class="card card-tournaments">
               <div class="card-block">
                 <div class="card-block-header card-block-tournaments-header">
                   Tournaments
@@ -65,7 +65,7 @@
 
           <!-- Arcade -->
           <div class="col-lg-6">
-            <div class="card card-arcade disabled">
+            <div class="card card-arcade">
               <div class="card-block">
                 <div class="card-block-header card-block-arcade-header">
                   Arcade
@@ -275,10 +275,10 @@ export default {
       color: #f2f2f2;
     }
       .card-block-practice-header {
-        background: -webkit-linear-gradient(to top, #009999, #7bb4d1);
-        background: -o-linear-gradient(to top, #009999, #7bb4d1);  
-        background: -moz-linear-gradient(to top, #009999, #7bb4d1);
-        background: linear-gradient(to top, #009999, #7bb4d1);
+        background: -webkit-linear-gradient(to top, #18121E, #009999);
+        background: -o-linear-gradient(to top, #18121E, #009999);  
+        background: -moz-linear-gradient(to top, #18121E, #009999);
+        background: linear-gradient(to top, #18121E, #009999);
       }
       .card-block-challenges-header {
         background: -webkit-linear-gradient(to top, #d5382a , #EAC67A);
