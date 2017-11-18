@@ -1,7 +1,97 @@
 <template>
+  <!-- Logged in -->
   <div v-if="userAuth && userData">
-    Index Page
+    <div class="row justify-content-center">
+      <div class="index-landing col-md-11 col-lg-11">
+        <div class="row">
+
+          <!-- Pratice -->
+          <div class="col-lg-6">
+            <router-link :to="{name: 'practice'}">
+              <div class="card card-practice">
+                <div class="card-block">
+                  <div class="card-block-header card-block-practice-header">
+                    Practice
+                  </div>
+                  <div class="card-block-body card-block-practice-body">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    <hr style="border-color: #EAC67A">
+                    <div class="text-right">
+                      <strong class="btn">View</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </router-link>
+          </div>
+
+          <!-- Challenges -->
+          <div class="col-lg-6">
+            <div class="card card-challenges disabled">
+              <div class="card-block">
+                <div class="card-block-header card-block-challenges-header">
+                  Challenges
+                </div>
+                <div class="card-block-body card-block-challenges-body">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  <hr style="border-color: #EAC67A">
+                  <div class="text-right">
+                    <strong class="btn">View</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Tournaments -->
+          <div class="col-lg-6">
+            <div class="card card-tournaments disabled">
+              <div class="card-block">
+                <div class="card-block-header card-block-tournaments-header">
+                  Tournaments
+                </div>
+                <div class="card-block-body card-block-tournaments-body">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  <hr style="border-color: #EAC67A">
+                  <div class="text-right">
+                    <strong class="btn">View</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Arcade -->
+          <div class="col-lg-6">
+            <div class="card card-arcade disabled">
+              <div class="card-block">
+                <div class="card-block-header card-block-arcade-header">
+                  Arcade
+                </div>
+                <div class="card-block-body card-block-arcade-body">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  <hr style="border-color: #EAC67A">
+                  <div class="text-right">
+                    <strong class="btn">View</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
   </div>
+
+
+
+
+
+  <!-- Not login -->
   <div v-else>
   <div class="row">
     <div class="index-login col-10 col-sm-8 col-md-6 col-lg-4">
@@ -142,6 +232,80 @@ export default {
 </script>
 
 <style>
+  /* Logged in */
+  @media only screen and (min-width: 992px) {
+   .index-landing {
+    position: absolute;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    left: 50%; top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    }
+  }
+  .index-landing {
+    /* position: absolute; */
+    /* margin-top: 30px; */
+    /* left: 50%; top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
+  }
+  .index-landing .card{
+    margin-bottom: 3%;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px 0 #18121E;
+    -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: none !important;
+    color: #18121E;
+  }
+    .index-landing .card:hover {
+      -ms-transform: translateY(-2%);
+      -webkit-transform: translateY(-2%);
+      transform: translateY(-2%);
+      box-shadow: 0 2px 2px 0 #18121E;
+    }
+
+    .card-block-header {
+      padding: 15px;
+      font-size: 30px;
+      color: #f2f2f2;
+    }
+      .card-block-practice-header {
+        background: -webkit-linear-gradient(to top, #009999, #7bb4d1);
+        background: -o-linear-gradient(to top, #009999, #7bb4d1);  
+        background: -moz-linear-gradient(to top, #009999, #7bb4d1);
+        background: linear-gradient(to top, #009999, #7bb4d1);
+      }
+      .card-block-challenges-header {
+        background: -webkit-linear-gradient(to top, #d5382a , #EAC67A);
+        background: -o-linear-gradient(to top, #d5382a , #EAC67A);  
+        background: -moz-linear-gradient(to top, #d5382a , #EAC67A);
+        background: linear-gradient(to top, #d5382a , #EAC67A);
+      }
+      .card-block-tournaments-header {
+        background: -webkit-linear-gradient(to top, #ff3385, #ff8080);
+        background: -o-linear-gradient(to top, #ff3385, #ff8080);  
+        background: -moz-linear-gradient(to top, #ff3385, #ff8080);
+        background: linear-gradient(to top, #ff3385, #ff8080);
+      }
+      .card-block-arcade-header {
+        background: -webkit-linear-gradient(to top, #3366ff, #aa80ff);
+        background: -o-linear-gradient(to top, #3366ff, #aa80ff);  
+        background: -moz-linear-gradient(to top, #3366ff, #aa80ff);
+        background: linear-gradient(to top, #3366ff, #aa80ff);
+      }
+    .card-block-body {
+      padding: 15px;
+      text-align: left;
+    }
+
+
+
+  /* Not login */
   .index-login {
     border-radius: 3px;
     position: absolute;

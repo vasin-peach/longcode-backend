@@ -34,7 +34,7 @@
             <router-link class="nav-link" :to="{ name: 'index'}"><strong :class="{ 'disabled': !userAuth }"> OPTION</strong></router-link>
           </li>
           <li class="nav-item sm" v-if="userData && userData.permission > 2">
-            <router-link class="nav-link" :to="{ name: 'adminTask'}"><strong> ADMIN</strong></router-link>
+            <router-link class="nav-link" :to="{ name: 'adminTask'}"><strong><i class="fa fa-star" aria-hidden="true"></i> ADMIN</strong></router-link>
           </li>
           <li class="nav-item sm" v-if="userData">
             <hr>
@@ -66,7 +66,7 @@
           <li class="nav-item dropdown md">
             <a class="nav-link" href="#" id="profile-dropdown" data-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
               <div class="nav-profile">
-                <img :src="userAuth.photoURL" style="width: 38px; border-radius: 50%;">
+                <img :src="userData.image" style="width: 38px; border-radius: 50%;">
                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
               </div>
             </a>
@@ -109,7 +109,8 @@
               </div>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profile-dropdown" >
-              <a class="dropdown-item" style="cursor:pointer" @click="fbLogin">SIGN IN</a>
+              <a class="dropdown-item" style="cursor:pointer" @click="fbLogin">SIGN IN FB</a>
+              <a class="dropdown-item" style="cursor:pointer" @click="gitLogin">SIGN IN GIT</a>
             </div>
           </li>
         </ul>
@@ -134,7 +135,7 @@ export default {
       ...mapState(['userAuth', 'userData'])
     },
     methods: {
-      ...mapMutations(['logout', 'fbLogin']),
+      ...mapMutations(['logout', 'fbLogin', 'gitLogin']),
     }
 }
 

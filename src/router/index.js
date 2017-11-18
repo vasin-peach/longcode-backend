@@ -18,6 +18,13 @@ import firebase from 'firebase'
 import Admin from '@/components/Backend/Admin'
 import adminUser from '@/components/Backend/AdminUser'
 import adminTask from '@/components/Backend/AdminTask'
+
+// Course
+import Aracde from '@/components/Course/Aracde'
+import Challenges from '@/components/Course/Challenges'
+import Practice from '@/components/Course/Practice'
+import Tournaments from '@/components/Course/Tournaments'
+
 Vue.use(Router)
 const router = new Router({
   mode: 'history',
@@ -37,7 +44,11 @@ const router = new Router({
             { path: 'user', component: adminUser, name: 'adminUser', meta: { requiresAdmin: true} },
             { path: 'task', component: adminTask, name: 'adminTask', meta: { requiresAdmin: true} }
           ]
-        }
+        },
+        { path: '/practice', component: Practice, name: 'practice', meta: { requiresAuth: true} },
+        { path: '/practice', component: Challenges, name: 'challenges', meta: { requiresAuth: true} },
+        { path: '/practice', component: Tournaments, name: 'tournaments', meta: { requiresAuth: true} },
+        { path: '/practice', component: Aracde, name: 'aracde', meta: { requiresAuth: true} },
       ],
     }
   ],
