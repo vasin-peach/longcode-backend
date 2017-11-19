@@ -82,14 +82,13 @@
                 <span id="code-icon-reset" @click="taskLoad"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</span>
               </div>
               <div class="col-8 text-right">
-                <button class="btn btn-danger bg-salmon-1 pointer btn-sm" style="padding: 0px 10px;
-                ">SUBMIT</button>
+                <button class="btn btn-danger bg-salmon-1 pointer btn-sm" style="padding: 0px 10px;" @click="taskSubmit">SUBMIT</button>
               </div>
             </div>
           </div>
           <div class="row code-container" style="margin: 0;">
             <div class="col" style="padding: 0;">
-              <codemirror v-model="code" :options="editorOption"></codemirror>
+              <codemirror v-model="code" :options="editorOption" id="code-mirror"></codemirror>
             </div>
           </div>
         </div>
@@ -268,6 +267,12 @@ export default {
       } else {
         $('.practiceTask').css('margin-top', '-21px')
       }
+    },
+    taskSubmit() {
+      const userCode = this.code
+      const taskData = this.taskData
+      const crossData = {'userCode': userCode, 'taskData': taskData}
+      console.log(crossData)
     }
   }
 }
