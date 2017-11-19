@@ -1,0 +1,351 @@
+<template>
+  <div v-if="taskData" class="task-container">
+    <div class="practiceTask row">
+        <div class="taskDetail col-lg text-left">
+          <div class="detail-nav ">
+            <div class="row">
+              <div class="col-4 text-left">
+                <router-link :to="{ name: 'practice' }" class="code-icon-backword">
+                <i class="fa fa-backward" aria-hidden="true"></i> Back
+                </router-link>
+              </div>
+              <div class="col-8 text-right">
+                || <strong>{{ taskData.name }}</strong> ||
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-body pt-3">
+            <div class="row">
+              <div class="col">
+                <div class="text-center"><h4><strong>{{ taskData.name}}</strong></h4></div>
+                <hr style="border-color: #D94B3F">
+                <div style="word-break: break-all; letter-spacing: 0.5px;">
+                  <strong>Description:</strong> <p style="text-indent: 10px;">{{ taskData.detail }}</p>
+                </div>
+                <br>
+                <div>
+                  <div style="margin-bottom: 10px;"><strong>Difficulty: </strong> <span style="color: #4b4257">{{difficulty}}</span> </div>
+                  <div style="margin-bottom: 10px;"><strong>Reward: </strong> <span style="color: #4b4257">{{point}}</span> <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%; padding-bottom: 4px;"></div>
+                </div>
+                <br>
+                <div>
+                  <strong>Input:</strong>
+                  <ul>
+                    <li>
+                      Main Function: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{ functionName }}</strong>
+                    </li>
+                    <li>
+                      Argument: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{ argName }}</strong>
+                    </li>
+                    <li>
+                      Time Limit: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">1000ms </strong>
+                    </li>
+                  </ul>
+                </div>
+                <br>
+                <div>
+                  <div style="margin-bottom: 10px;"><strong>Testcase:</strong></div>
+                  <div v-for="(testcase, count) in taskData.testcase" >
+                    <div class="testcase-header" width="75%" style="cursor: pointer;" data-toggle="collapse" :data-target="'#' + taskData.createdAt + '-' + count" aria-expanded="false">
+                      Case {{ count+1 }}
+                    </div>
+                    <div class="collapse testcase-body" :id="taskData.createdAt + '-' + count">
+                      <ul>
+                        <li>
+                          <span v-for="x in testcase.input[0]">
+                            Input: 
+                            <strong style="color: #4b4257; background: #e6e6e6;">
+                              <span v-for="inputs in testcase.input">
+                                <div v-for="(value, key) in inputs" style="padding: 0"> - {{key}}: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{value}}</strong></div>
+                              </span>
+                            </strong> <br>
+                          </span> 
+                        </li>
+                        <li>
+                          Output: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{ testcase.output }}</strong>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <br><hr style="border-color: #D94B3F"><br>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="taskCode col-lg text-left">
+          <div class="code-nav">
+            <div class="row">
+              <div class="col-4 text-left">
+                <span id="code-icon-reset" @click="taskLoad"><i class="fa fa-refresh" aria-hidden="true"></i> Reset</span>
+              </div>
+              <div class="col-8 text-right">
+                <button class="btn btn-danger bg-salmon-1 pointer btn-sm" style="padding: 0px 10px;
+                ">SUBMIT</button>
+              </div>
+            </div>
+          </div>
+          <div class="row code-container" style="margin: 0;">
+            <div class="col" style="padding: 0;">
+              <codemirror v-model="code" :options="editorOption"></codemirror>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+</template>
+
+<script>
+  // require active-line.js
+  require('codemirror/addon/selection/active-line.js')
+  // styleSelectedText
+  require('codemirror/addon/selection/mark-selection.js')
+  require('codemirror/addon/search/searchcursor.js')
+  // hint
+  require('codemirror/addon/hint/show-hint.js')
+  require('codemirror/addon/hint/show-hint.css')
+  require('codemirror/addon/hint/javascript-hint.js')
+  require('codemirror/addon/selection/active-line.js')
+  // highlightSelectionMatches
+  require('codemirror/addon/scroll/annotatescrollbar.js')
+  require('codemirror/addon/search/matchesonscrollbar.js')
+  require('codemirror/addon/search/searchcursor.js')
+  require('codemirror/addon/search/match-highlighter.js')
+  // keyMap
+  require('codemirror/mode/clike/clike.js')
+  require('codemirror/addon/edit/matchbrackets.js')
+  require('codemirror/addon/comment/comment.js')
+  require('codemirror/addon/dialog/dialog.js')
+  require('codemirror/addon/dialog/dialog.css')
+  require('codemirror/addon/search/searchcursor.js')
+  require('codemirror/addon/search/search.js')
+  require('codemirror/keymap/sublime.js')
+  // foldGutter
+  require('codemirror/addon/fold/foldgutter.css')
+  require('codemirror/addon/fold/brace-fold.js')
+  require('codemirror/addon/fold/comment-fold.js')
+  require('codemirror/addon/fold/foldcode.js')
+  require('codemirror/addon/fold/foldgutter.js')
+  require('codemirror/addon/fold/indent-fold.js')
+  require('codemirror/addon/fold/markdown-fold.js')
+  require('codemirror/addon/fold/xml-fold.js')
+
+  require('codemirror/mode/clike/clike.js')
+  require('codemirror/addon/edit/matchbrackets.js')
+  require('codemirror/addon/comment/comment.js')
+  require('codemirror/addon/dialog/dialog.js')
+  require('codemirror/addon/dialog/dialog.css')
+  require('codemirror/addon/search/searchcursor.js')
+  require('codemirror/addon/search/search.js')
+  require('codemirror/keymap/emacs.js')
+
+
+import { mapState } from 'vuex'
+import firebase from 'firebase'
+// import someResource from 'codemirror/some-resource'
+export default {
+  name: 'practiceTask',
+  data() {
+    return {
+      taskId: this.$route.params.taskId,
+      taskData: null,
+      functionName: null,
+      argName: null,
+      point: 100,
+      difficulty: 'easy',
+      code: 'hi',
+      editorOption: {
+        tabSize: 4,
+        styleActiveLine: false,
+        lineNumbers: false,
+        line: true,
+        foldGutter: true,
+        styleSelectedText: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+        highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+        mode: 'text/x-python',
+        hintOptions:{
+          completeSingle: false
+        },
+        keyMap: "emacs",
+        matchBrackets: true,
+        showCursorWhenSelecting: true,
+        theme: "hopscotch",
+        autoCloseBrackets: true,
+        readOnlyLines: [0, 4],
+        
+        extraKeys: { "Ctrl": "autocomplete" }
+      }
+    }
+  },
+  computed: {
+    ...mapState(['practiceList'])
+  },
+  mounted() {
+    setTimeout(() => {
+      this.editorOption.lineNumbers = true
+      this.editorOption.styleActiveLine = true
+    }, 3000)
+    
+  },
+  created() {
+    this.taskLoad()
+  },
+  updated() {
+    this.screenFull()
+  },
+  methods: {
+    taskLoad() {
+      const this_ = this
+      firebase.database().ref('/tasks').orderByChild('createdAt').equalTo(parseInt(this.taskId)).once('value').then( function(snapshot) {
+        for (var i in snapshot.val()) {
+          this_.taskData = snapshot.val()[i]
+          var testcase = this_.taskData.testcase[0].input
+          var functionName = this_.taskData.testcase[0].function
+          var func = []
+          var argName = []
+          var argValue = []
+          for (var y in testcase) {
+            for (var x in testcase[y]) {
+              argName.push(x)
+            }
+          }
+          this_.functionName = functionName
+          this_.argName = argName
+          func.push("def " + functionName + " (" + argName.join(', ') + "): \n # your code here")
+          this_.code = func.join("\n\n\n")
+
+          // Created point
+          this_.point = (this_.taskData.send / this_.taskData.pass) * 100
+          if (!this_.point) {
+            this_.point = 100
+          }
+
+          // Created difficulty
+          var percent = Math.round(this_.taskData.pass * 100 / this_.taskData.send)
+          if (percent > 90) {
+            var difficulty = 'Beginner'
+          } else if (percent < 90 && percent >= 70) {
+            var difficulty = 'Easy'
+          } else if (percent < 70 && percent >= 50) {
+            var difficulty = 'Normal'
+          } else if (percent < 50 && percent >= 30) {
+            var difficulty = 'Hard'
+          } else {
+            var difficulty = 'Very Hard'
+          }
+          this_.difficulty = difficulty
+        }
+      })
+    },
+    screenFull() {
+      $(window).on('resize', function(){
+        var screenHeight = $(window).height()
+        var navbarHeight = $('.navbar').height()
+        var fullHeight = screenHeight - navbarHeight
+        var halfHeight = fullHeight / 2
+        $('.practiceTask').css('min-height', fullHeight + 'px')
+        $('.code-container, .detail-body').css('min-height', fullHeight - $('.code-nav').height() + 'px')
+        var screenWidth = $(window).width()
+        if (screenWidth <= 992 && screenWidth >= 767) {
+          $('.practiceTask').css('margin-top', '-30px')
+        } else {
+          $('.practiceTask').css('margin-top', '-21px')
+        }
+      })
+      var screenHeight = $(window).height()
+      var navbarHeight = $('.navbar').height()
+      var fullHeight = screenHeight - navbarHeight
+      var halfHeight = fullHeight / 2
+      $('.practiceTask').css('min-height', fullHeight + 'px')
+      $('.code-container, .detail-body').css('min-height', fullHeight - $('.code-nav').height()  + 'px')
+      var screenWidth = $(window).width()
+      if (screenWidth <= 992 && screenWidth >= 767) {
+        $('.practiceTask').css('margin-top', '-30px')
+      } else {
+        $('.practiceTask').css('margin-top', '-21px')
+      }
+    }
+  }
+}
+</script>
+
+<style>
+  .CodeMirror-focused .cm-matchhighlight {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
+    background-position: bottom;
+    background-repeat: repeat-x;
+  }
+  /* .cm-matchhighlight {background-color: lightgreen} */
+  .CodeMirror-selection-highlight-scrollbar {background-color: green}
+
+  .practiceTask {
+    margin: 0 -15px;
+    background: #444;
+  }
+    .practiceTask > div {
+      padding: 0;
+      margin: 0;
+    }
+    .taskDetail {
+      z-index: 10 !important;
+      background: #f2f2f2;
+      min-height: 100%;
+    }
+      .detail-body {
+        height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+    .taskCode {
+      background: #984B43;
+      min-height: 100%;
+    }
+      .code-nav {
+        background: #EAC67A;
+        padding: 5px 20px;
+        box-shadow: 0 0 5px 0 #18121E;
+      }
+        #code-icon-reset, .code-icon-backword {
+          cursor: pointer;
+          color: #4d4d4d;
+          -webkit-transition: color 0.3s;
+          -moz-transition: color 0.3s;
+          transition: color 0.3s;
+        }
+          #code-icon-reset:hover, .code-icon-backword:hover {
+            color: #333333;
+          }
+      .detail-nav {
+        background: #e7be65;
+        padding: 5px 20px;
+        box-shadow: 0 0 5px 0 #18121E;
+      }
+      .detail-body {
+        padding: 5px 20px;
+      }
+      .detail-body li {
+        padding: 10px;
+      }
+    .testcase-header {
+      border-radius: 3px;
+      padding: 5px;
+      color: #DFDCE3;
+      background: #233237;
+      margin-bottom: 5px;
+    }
+    .testcase-body {
+      border-bottom-left-radius: 3px;
+      border-bottom-right-radius: 3px;
+      border: 1px dashed #D94B3F;
+      border-style: none dashed dashed dashed;
+      margin-bottom: 10px;
+    }
+
+  .CodeMirror {
+    min-height: 100%;
+  }
+</style>

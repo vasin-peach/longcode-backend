@@ -1,10 +1,9 @@
 <template>
-  <div>Landing Page</div>
+  <div>Challenges</div>
 </template>
 
 <script>
 export default {
-    name: 'landing'
 }
 </script>
 
