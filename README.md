@@ -20,11 +20,11 @@ npm run build --report
 
 # Color
 Clean -> #DFDCE3, #CCC, #737373
-NAVY BLUE -> #18121E
+NAVY BLUE -> #18121E #4b4257
 GUNMETAL -> #233237  #dce6e9
 RUSTY RED -> #984B43
 WARM -> #EAC67A
-SALMON -> #D94B3F #D94B3F #d5382a
+SALMON -> #D94B3F #d5382a
 
 
 

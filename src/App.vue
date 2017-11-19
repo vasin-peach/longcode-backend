@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <transition name="loading-transition">
-      <div>
+      <div class="">
         <router-view name="header"></router-view>
         <router-view name="body"></router-view>
       </div>
@@ -47,6 +47,10 @@ export default {
 
 <style>
 /* App css edit */
+.full-height {
+  min-height: 100%;
+  background: #444;
+}
 * {
   font-family: 'Mitr', 'FontAwesome', sans-serif !important;
 }

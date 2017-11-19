@@ -47,7 +47,7 @@
                         </div>
                         <div class="row">
                           <div class="col-sm-4">
-                            <input v-model="taskInputName[count +'-'+ currentInput]" class="form-control" placeholder="name" required>
+                            <input v-model="taskInputName[count +'-'+ currentInput]" class="form-control" placeholder="input name" required>
                           </div>
                           <div class="col-sm-8">
                              <input v-model="taskInputValue[count +'-'+ currentInput]" class="form-control" placeholder="value" required>
@@ -67,6 +67,12 @@
 
                   <hr>
                   <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Function Name</label>
+                        <input v-model="taskFunciton[count]" name="taskFunction" type="text" class="form-control" required>
+                      </div>
+                    </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Output</label>
@@ -145,6 +151,7 @@ export default {
       taskInputName: {},
       taskInputValue: {},
       taskOutput: {},
+      taskFunciton: {},
       testcase: 1,
       input: 1,
     }
@@ -219,24 +226,28 @@ export default {
         for (var input in this.taskInputValue) { // all input
           var dictInput = []
           if (input.split('-')[0] == x) { // select input in this testcase.
-            var inputValue = this.taskInputValue[input].split(',')
+            var inputValue = this.taskInputValue[input]
             var inputName = this.taskInputName[input].toString()
             var filterValue = []
-            for (var i in inputValue) { // Clean string and change format type
-              var currentI = inputValue[i].replace(/^\s+|\s+$/g, "")
-              if (currentI.startsWith('"') && currentI.endsWith('"')) {
-                currentI = String(currentI).replace(/['"]+/g, '')
-              } else if(!isNaN(currentI)) {
-                currentI = parseFloat(currentI)
-              }
-              filterValue.push(currentI)
+            // for (var i in inputValue) { // Clean string and change format type
+            //   var currentI = inputValue[i].replace(/^\s+|\s+$/g, "")
+            //   if (currentI.startsWith('"') && currentI.endsWith('"')) {
+            //     currentI = String(currentI).replace(/['"]+/g, '')
+            //   } else if(!isNaN(currentI)) {
+            //     currentI = parseFloat(currentI)
+            //   }
+            //   filterValue.push(currentI)
+            // }
+            if (inputValue.startsWith('"') && inputValue.endsWith('"')) {
+              inputValue = String(inputValue).replace(/['"]+/g, '')
+            } else if(!isNaN(inputValue)) {
+              inputValue = parseFloat(inputValue)
             }
-            dictInput[inputName] = filterValue
+            dictInput[inputName] = inputValue
             allInput.push(dictInput)
-            console.log(dictInput, allInput)
           }
         }
-        testcase.push({'input': allInput, 'output': this.taskOutput[x]})
+        testcase.push({'function': this.taskFunciton[x], 'input': allInput, 'output': this.taskOutput[x]})
       }
       var addTaskData = { // created data array
         'name': this.taskName,

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid h-100">
+  <div class="container-fluid">
       <router-view></router-view>
   </div>
   
@@ -19,5 +19,4 @@ export default {
 </script>
 
 <style>
-
 </style>
