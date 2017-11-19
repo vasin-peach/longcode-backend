@@ -249,14 +249,6 @@ export default {
       margin-top: 30px;
     }
   }
-  .index-landing {
-    /* position: absolute; */
-    /* margin-top: 30px; */
-    /* left: 50%; top: 50%;
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); */
-  }
   .index-landing .card{
     margin-bottom: 3%;
     border-radius: 3px;

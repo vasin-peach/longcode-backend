@@ -181,7 +181,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['practiceList'])
+    ...mapState(['practiceList', 'userAuth', 'userData'])
   },
   mounted() {
     setTimeout(() => {
@@ -269,10 +269,37 @@ export default {
       }
     },
     taskSubmit() {
+      // Default
+      const this_ = this
+
+      // Add this task in user data
+      var query = '/users/' + this_.userData.authId
+      var updates = {}
+      updates[query + '/enroll'] = this_.taskId
+      firebase.database().ref(query).once('value').then(function(snapshot) {
+        var enroll = snapshot.val().enroll
+        if (!enroll) {
+          firebase.database().ref().update(updates)
+        } else if (enroll.indexOf(this_.taskId) == -1) {
+          // user enroll
+          var newEnroll = []
+          newEnroll = newEnroll.concat(snapshot.val().enroll).concat(this_.taskId)
+
+          // task increase send
+          firebase.database().ref(query + '/enroll').set(newEnroll)
+          var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
+          taskSend.transaction(function(send) {
+            return send + 1
+          })
+        }
+      })
+
+
       const userCode = this.code
       const taskData = this.taskData
       const crossData = {'userCode': userCode, 'taskData': taskData}
       console.log(crossData)
+
     }
   }
 }

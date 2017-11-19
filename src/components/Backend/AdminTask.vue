@@ -229,15 +229,6 @@ export default {
             var inputValue = this.taskInputValue[input]
             var inputName = this.taskInputName[input].toString()
             var filterValue = []
-            // for (var i in inputValue) { // Clean string and change format type
-            //   var currentI = inputValue[i].replace(/^\s+|\s+$/g, "")
-            //   if (currentI.startsWith('"') && currentI.endsWith('"')) {
-            //     currentI = String(currentI).replace(/['"]+/g, '')
-            //   } else if(!isNaN(currentI)) {
-            //     currentI = parseFloat(currentI)
-            //   }
-            //   filterValue.push(currentI)
-            // }
             if (inputValue.startsWith('"') && inputValue.endsWith('"')) {
               inputValue = String(inputValue).replace(/['"]+/g, '')
             } else if(!isNaN(inputValue)) {
@@ -249,7 +240,12 @@ export default {
         }
         testcase.push({'function': this.taskFunciton[x], 'input': allInput, 'output': this.taskOutput[x]})
       }
+
+      var taskKey = firebase.database().ref('users').push().key
+      var updates = {}
+
       var addTaskData = { // created data array
+        'taskId': taskKey,
         'name': this.taskName,
         'detail': this.taskDetail,
         'testcase': testcase,
@@ -258,7 +254,7 @@ export default {
         'createdAt': firebase.database.ServerValue.TIMESTAMP,
         'status': 'enable'
       }
-      firebase.database().ref('/tasks').push(addTaskData) // push data to firebase
+      firebase.database().ref('/tasks/' + taskKey).set(addTaskData)
       swal("Added", "เพิ่ม Task เข้าสู่ระบบ", "success")
       this.taskLoad() //refresh task
       this.taskName = null, // remove all data
