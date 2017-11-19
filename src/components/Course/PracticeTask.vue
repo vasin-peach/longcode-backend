@@ -225,8 +225,8 @@ export default {
 
           // Created difficulty
           var percent = Math.round(this_.taskData.pass * 100 / this_.taskData.send)
-          if (percent > 90) {
-            var difficulty = 'Beginner'
+          if (percent > 90 || !percent) {
+            var difficulty = 'No data'
           } else if (percent < 90 && percent >= 70) {
             var difficulty = 'Easy'
           } else if (percent < 70 && percent >= 50) {

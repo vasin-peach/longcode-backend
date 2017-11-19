@@ -244,6 +244,11 @@ export default {
     transform: translate(-50%, -50%);
     }
   }
+  @media only screen and (max-width: 320px) {
+    .index-login {
+      margin-top: 30px;
+    }
+  }
   .index-landing {
     /* position: absolute; */
     /* margin-top: 30px; */

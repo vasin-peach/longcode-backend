@@ -10,13 +10,13 @@
             <div class="card task-practice">
               <div class="card-header">
                 <div class="row">
-                  <div class="col-8 col-lg-8 text-left">
+                  <div class="col col-lg-8 text-left">
                     <strong>{{ task.name }}</strong>
                   </div>
-                  <div class="col-2 col-lg-2 text-right">
+                  <div class="col col-lg-2 text-right">
                     Easy
                   </div>
-                  <div class="col-2 col-lg-2 text-right">
+                  <div class="col col-lg-2 text-right">
                     10 <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
                   </div>
                 </div>
