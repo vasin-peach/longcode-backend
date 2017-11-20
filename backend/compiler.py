@@ -8,10 +8,15 @@ class Code:
         #------------------------------------#
         # exec function useff only in class
         v = {}
-        exec(data['userCode'], None, v)
+        self.Error = False
+        try:
+            exec(data['userCode'], None, v)
+            for name, value in v.items():
+                setattr(self, name, value)
+        except Exception as e:
+            self.Error = True
+            self.ee = e
         # print(v)
-        for name, value in v.items():
-            setattr(self, name, value)
         #------------------------------------#
         # print(locals())
         self.timeLimit = 1
@@ -47,17 +52,17 @@ class Code:
             if str(OUT) == str(EXPECTED):
                 print('case%d: Passed' % (case+1))
                 # self.update_result(1) # 1 for pass
-                ans.put(1)
+                ans.put([case, 1])
                 # return 1
             else:
                 print('case%d: Wrong Answer' % (case+1))
                 # self.update_result(0) # 0 for not pass
-                ans.put(0)
+                ans.put([case, 0])
                 # return 0
         except Exception as e:
             print('case%d: %s' % (case+1, e)) 
             # self.update_result(-2) # -2 for error in code
-            ans.put(-2)
+            ans.put([case, -2, e])
             # return -2
 
     def run(self):
@@ -69,7 +74,8 @@ class Code:
             1 : Passed
             ****************
         '''
-
+        if self.Error:
+            return [-1, -2, self.ee]
         ans = thread.Queue()
         job = []
         for case in range(len(self.input)):
@@ -83,7 +89,7 @@ class Code:
             if T.is_alive():
                 print('case%d: Timeout' % (case+1))
                 # self.update_result(-1) # -1 for timeout
-                ans.put(-1)
+                ans.put([case, -1])
                 T.terminate()
                 T.join()
         return [ans.get() for j in job]
