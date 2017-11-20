@@ -6,7 +6,7 @@ class Code:
     
     def __init__(self, data):
         #------------------------------------#
-        # exec function use only in class
+        # exec function useff only in class
         v = {}
         exec(data['userCode'], None, v)
         # print(v)
