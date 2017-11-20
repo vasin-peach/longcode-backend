@@ -48,9 +48,13 @@
                   <div style="margin-bottom: 10px;"><strong>Testcase:</strong></div>
                   <div v-for="(testcase, count) in taskData.testcase" >
                     <div class="testcase-header" width="75%" style="cursor: pointer;" data-toggle="collapse" :data-target="'#' + taskData.createdAt + '-' + count" aria-expanded="false">
-                      Case {{ count+1 }}
+                      <div class="row">
+                        <div class="col-sm">Case {{ count+1}}</div>
+                        <div class="col-sm text-right mr-2"><span v-if="Math.round(taskLength / 2) <= count"><i class="fa fa-lock" aria-hidden="true"></i></span></div>
+                      </div>
+                      
                     </div>
-                    <div class="collapse testcase-body" :id="taskData.createdAt + '-' + count">
+                    <div class="collapse testcase-body" :id="taskData.createdAt + '-' + count" v-if="count < Math.round(taskLength / 2)">
                       <ul>
                         <li>
                           <span v-for="x in testcase.input[0]">
@@ -152,9 +156,10 @@ export default {
     return {
       taskId: this.$route.params.taskId,
       taskData: null,
+      taskLength: 0,
       functionName: null,
       argName: null,
-      point: 100,
+      point: 60,
       difficulty: 'easy',
       code: 'hi',
       editorOption: {
@@ -203,6 +208,7 @@ export default {
       firebase.database().ref('/tasks').orderByChild('createdAt').equalTo(parseInt(this.taskId)).once('value').then( function(snapshot) {
         for (var i in snapshot.val()) {
           this_.taskData = snapshot.val()[i]
+          this_.taskLength = snapshot.val()[i].testcase.length
           var testcase = this_.taskData.testcase[0].input
           var functionName = this_.taskData.functionName
           var func = []
@@ -219,7 +225,7 @@ export default {
           this_.code = func.join("\n\n\n")
 
           // Created point
-          this_.point = (this_.taskData.send / this_.taskData.pass) * 100
+          this_.point = (this_.taskData.send / this_.taskData.pass) * 60
           if (!this_.point) {
             this_.point = 100
           }
