@@ -13,11 +13,8 @@
                   <div class="col col-lg-8 text-left">
                     <strong>{{ task.name }}</strong>
                   </div>
-                  <div class="col col-lg-2 text-right">
-                    Easy
-                  </div>
-                  <div class="col col-lg-2 text-right">
-                    10 <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
+                  <div class="col col-lg-4 text-right">
+                    {{ task.send / task.pass * 60 }} <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
                   </div>
                 </div>
               </div>

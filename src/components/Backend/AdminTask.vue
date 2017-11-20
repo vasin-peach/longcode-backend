@@ -231,8 +231,15 @@ export default {
               inputValue = String(inputValue).replace(/['"]+/g, '')
             } else if(!isNaN(inputValue)) {
               inputValue = parseFloat(inputValue)
+            } else {
+              if (inputValue.startsWith('[') && inputValue.endsWith(']')) {
+                inputValue = JSON.parse(inputValue)
+              }
             }
-            dictInput[inputName] = inputValue
+            var inputValueList = []
+            inputValueList.push(inputValue)
+
+            dictInput[inputName] = inputValueList
             allInput.push(dictInput)
           }
         }
@@ -247,8 +254,8 @@ export default {
         'name': this.taskName,
         'detail': this.taskDetail,
         'testcase': testcase,
-        'send': 0,
-        'pass': 0,
+        'send': 1,
+        'pass': 1,
         'functionName': this.taskFunciton,
         'createdAt': firebase.database.ServerValue.TIMESTAMP,
         'status': 'enable'
