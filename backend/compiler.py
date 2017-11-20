@@ -1,4 +1,5 @@
-from pathos.helpers import mp as thread
+# from pathos.helpers import mp as thread
+import multiprocessing as thread
 
 path = 'test3.txt'
 
@@ -60,7 +61,7 @@ class Code:
                 ans.put([case, 0])
                 # return 0
         except Exception as e:
-            print('case%d: %s' % (case+1, e)) 
+            print('case%d: %s' % (case+1, str(e))) 
             # self.update_result(-2) # -2 for error in code
             ans.put([case, -2, e])
             # return -2
@@ -75,7 +76,7 @@ class Code:
             ****************
         '''
         if self.Error:
-            return [-1, -2, self.ee]
+            return [-1, -2, str(self.ee)]
         ans = thread.Queue()
         job = []
         for case in range(len(self.input)):
