@@ -61,9 +61,9 @@ class Code:
                 ans.put([case, 0])
                 # return 0
         except Exception as e:
-            print('case%d: %s' % (case+1, str(e))) 
+            print('case%d: %s' % (case+1, e)) 
             # self.update_result(-2) # -2 for error in code
-            ans.put([case, -2, e])
+            ans.put([case, -2, str(e)])
             # return -2
 
     def run(self):

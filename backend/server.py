@@ -11,7 +11,7 @@ def App():
     data = request.get_json(silent=True)
     computed = Code(data)
     respone = computed.run()
-    print(respone)
+    # print(respone)
     #-----------------------#
     # free memmory
     computed = None
