@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-preset-stage-0": "^6.24.1",
     "firebase": "^4.6.2",
+    "fs": "0.0.1-security",
     "sweetalert": "^2.0.8",
     "vee-validate": "^2.0.0-rc.21",
     "vue": "^2.5.3",

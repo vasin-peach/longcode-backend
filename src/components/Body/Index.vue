@@ -244,13 +244,10 @@ export default {
     transform: translate(-50%, -50%);
     }
   }
-  .index-landing {
-    /* position: absolute; */
-    /* margin-top: 30px; */
-    /* left: 50%; top: 50%;
-    -ms-transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%); */
+  @media only screen and (max-width: 320px) {
+    .index-login {
+      margin-top: 30px;
+    }
   }
   .index-landing .card{
     margin-bottom: 3%;

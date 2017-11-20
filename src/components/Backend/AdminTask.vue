@@ -21,6 +21,10 @@
                   <label>Description</label>
                   <textarea  v-model="taskDetail" name="taskDetail" class="form-control" rows="3" required></textarea>
               </div>
+              <div class="form-group">
+                <label>Function Name</label>
+                <input v-model="taskFunciton" name="taskFunction" type="text" class="form-control" required>
+              </div>
 
               <hr class="hr-sm">
               <div class="mb-2"><strong class="pointer salmon-1" style="font-size: 15px;" @click="addCase"><i class="fa fa-plus" aria-hidden="true"></i> ADD TESTCASE</strong></div>
@@ -67,12 +71,6 @@
 
                   <hr>
                   <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label>Function Name</label>
-                        <input v-model="taskFunciton[count]" name="taskFunction" type="text" class="form-control" required>
-                      </div>
-                    </div>
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label>Output</label>
@@ -147,11 +145,11 @@ export default {
       tasks: null,
       taskName: null,
       taskDetail: null,
+      taskFunciton: null,
       taskInput: {},
       taskInputName: {},
       taskInputValue: {},
       taskOutput: {},
-      taskFunciton: {},
       testcase: 1,
       input: 1,
     }
@@ -229,15 +227,6 @@ export default {
             var inputValue = this.taskInputValue[input]
             var inputName = this.taskInputName[input].toString()
             var filterValue = []
-            // for (var i in inputValue) { // Clean string and change format type
-            //   var currentI = inputValue[i].replace(/^\s+|\s+$/g, "")
-            //   if (currentI.startsWith('"') && currentI.endsWith('"')) {
-            //     currentI = String(currentI).replace(/['"]+/g, '')
-            //   } else if(!isNaN(currentI)) {
-            //     currentI = parseFloat(currentI)
-            //   }
-            //   filterValue.push(currentI)
-            // }
             if (inputValue.startsWith('"') && inputValue.endsWith('"')) {
               inputValue = String(inputValue).replace(/['"]+/g, '')
             } else if(!isNaN(inputValue)) {
@@ -247,18 +236,24 @@ export default {
             allInput.push(dictInput)
           }
         }
-        testcase.push({'function': this.taskFunciton[x], 'input': allInput, 'output': this.taskOutput[x]})
+        testcase.push({'input': allInput, 'output': this.taskOutput[x]})
       }
+
+      var taskKey = firebase.database().ref('users').push().key
+      var updates = {}
+
       var addTaskData = { // created data array
+        'taskId': taskKey,
         'name': this.taskName,
         'detail': this.taskDetail,
         'testcase': testcase,
         'send': 0,
         'pass': 0,
+        'functionName': this.taskFunciton,
         'createdAt': firebase.database.ServerValue.TIMESTAMP,
         'status': 'enable'
       }
-      firebase.database().ref('/tasks').push(addTaskData) // push data to firebase
+      firebase.database().ref('/tasks/' + taskKey).set(addTaskData)
       swal("Added", "เพิ่ม Task เข้าสู่ระบบ", "success")
       this.taskLoad() //refresh task
       this.taskName = null, // remove all data

@@ -14,13 +14,14 @@ firebase.initializeApp(firebaseConfig);
 const state = {
     userAuth: null,
     userData: null,
-    practiceList: null
+    practiceList: null,
 }
 const mutations = {
     // Firebase auth state
     auth(state) {
         firebase.auth().onAuthStateChanged( function(user) {
             if (user) {
+                
                 state.userAuth = user
                 firebase.database().ref('/users').orderByChild('email').equalTo(user.email).once('value').then(function(snapshot) {
                     if (!snapshot.val()) {
@@ -30,18 +31,25 @@ const mutations = {
                         if (!user.displayName) {
                             user.displayName = user.email
                         }
-                        console.log(user)
                         // Create user data in firebase
+                        var userKey = firebase.database().ref('users').push().key
+                        var updates = {}
+                    
                         const userData = {
                             name: user.displayName,
                             email: user.email,
                             image: user.photoURL,
                             uid: user.uid,
+                            authId: userKey,
                             point: 0,
                             permission: 1,
                             createdAt: firebase.database.ServerValue.TIMESTAMP
                         }
-                        firebase.database().ref('/users').push(userData)
+                        updates['/users/' + userKey] = userData
+                        firebase.database().ref().update(updates)
+                         
+
+                        // firebase.database().ref('/users').push(userData)
                         firebase.database().ref('/users').orderByChild('email').equalTo(user.email).once('value').then(function(snapshot) {
                             for (var i in snapshot.val()) {
                                 state.userData = snapshot.val()[i]
