@@ -8,15 +8,10 @@ class Code:
         #------------------------------------#
         # exec function useff only in class
         v = {}
-        self.Error = False
-        try:
-            exec(data['userCode'], None, v)
-            for name, value in v.items():
-                setattr(self, name, value)
-        except Exception as e:
-            self.Error = True
-            self.ee = e
+        exec(data['userCode'], None, v)
         # print(v)
+        for name, value in v.items():
+            setattr(self, name, value)
         #------------------------------------#
         # print(locals())
         self.timeLimit = 1
@@ -74,8 +69,7 @@ class Code:
             1 : Passed
             ****************
         '''
-        if self.Error:
-            return [-1, -2, self.ee]
+
         ans = thread.Queue()
         job = []
         for case in range(len(self.input)):
