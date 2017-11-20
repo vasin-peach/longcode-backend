@@ -37,8 +37,9 @@ class Code:
     
     def run_helper(self, INPUT, EXPECTED, case, ans):
         func = 'self.' + self.name
-        # print(*INPUT.values())
-        b = '(' + ', '.join('\''+str(*v)+'\'' if isinstance(*v, str) else str(*v) for v in INPUT.values()) + ')'
+        # for v in INPUT:
+        #     print(*v.values())
+        b = '(' + ', '.join('\''+str(*list(*v.values()))+'\'' if isinstance(*list(*v.values()), str) else str(*list(*v.values())) for v in INPUT) + ')'
         print(func+b)
         try:
             OUT = eval(func+b)
@@ -75,7 +76,7 @@ class Code:
             # sent[case] = False
             # print(self.input[case])
             # print(self.expected[case])
-            T = thread.Process(target = self.run_helper, args = (*self.input[case], self.expected[case], case, ans))
+            T = thread.Process(target = self.run_helper, args = (self.input[case], self.expected[case], case, ans))
             job.append(T)
             T.start()
             T.join(self.timeLimit)
