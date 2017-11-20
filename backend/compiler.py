@@ -8,8 +8,7 @@ class Code:
         #------------------------------------#
         # exec function use only in class
         v = {}
-        self.data = data
-        exec(open('test'+'/'+self.data['name']).read(), None, v)
+        exec(data['userCode'], None, v)
         # print(v)
         for name, value in v.items():
             setattr(self, name, value)
@@ -17,7 +16,8 @@ class Code:
         # print(locals())
         self.timeLimit = 1
         # self.result = list()
-        self.name = data['func']
+        self.data = data['taskData']
+        self.name = self.data['functionName']
         self.input, self.expected = self.get_testcase()
         # print(self.input[0])
         # print(self.expected[0])
@@ -37,10 +37,12 @@ class Code:
     
     def run_helper(self, INPUT, EXPECTED, case, ans):
         func = 'self.' + self.name
-        # print(INPUT)
+        # for i in INPUT:
+        #     for val in i.values():
+        #         print(val)
         # print(EXPECTED)
-        b = '(' + ', '.join(str(*val) for key, val in INPUT.items()) + ')'
-        # print(func+b)
+        b = '(' + ', '.join(str(*element.values()) for element in INPUT) + ')'
+        print(func+b)
         try:
             OUT = eval(func+b)
             print(OUT, '|', EXPECTED)
@@ -74,9 +76,9 @@ class Code:
         job = []
         for case in range(len(self.input)):
             # sent[case] = False
-            # print(*self.input[case])
+            # print(self.input[case])
             # print(self.expected[case])
-            T = thread.Process(target = self.run_helper, args = (*self.input[case], self.expected[case], case, ans))
+            T = thread.Process(target = self.run_helper, args = (self.input[case], self.expected[case], case, ans))
             job.append(T)
             T.start()
             T.join(self.timeLimit)
@@ -97,3 +99,5 @@ class Code:
 
 # A = Code('add')
 # A.run()
+
+
