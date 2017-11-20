@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 from compiler import Code
+import json
 
 app = Flask(__name__)
 CORS(app)
@@ -16,7 +17,8 @@ def App():
     computed = None
     del(computed)
     #-----------------------#
-    return respone
+    print(respone)
+    return json.dumps(respone)
 
 
 if __name__ == "__main__":
