@@ -280,13 +280,18 @@ export default {
         var enroll = snapshot.val().enroll
         if (!enroll) {
           firebase.database().ref().update(updates)
+          // task increase send
+          var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
+          taskSend.transaction(function(send) {
+            return send + 1
+          })
         } else if (enroll.indexOf(this_.taskId) == -1) {
           // user enroll
           var newEnroll = []
           newEnroll = newEnroll.concat(snapshot.val().enroll).concat(this_.taskId)
+          firebase.database().ref(query + '/enroll').set(newEnroll)
 
           // task increase send
-          firebase.database().ref(query + '/enroll').set(newEnroll)
           var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
           taskSend.transaction(function(send) {
             return send + 1
@@ -298,7 +303,7 @@ export default {
       const userCode = this.code
       const taskData = this.taskData
       const crossData = {'userCode': userCode, 'taskData': taskData}
-      console.log(crossData)
+      console.log(JSON.stringify(crossData))
 
     }
   }
