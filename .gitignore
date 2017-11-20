@@ -7,6 +7,7 @@ results.tap
 results.xml
 config.json
 .DS_Store
+*/__pycache__
 */.DS_Store
 */*/.DS_Store
 ._*
