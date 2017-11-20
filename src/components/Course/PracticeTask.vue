@@ -158,6 +158,8 @@ export default {
       code: 'hi',
       editorOption: {
         tabSize: 4,
+        indentWithTabs: true,
+        indentUnit: 4,
         styleActiveLine: false,
         lineNumbers: false,
         line: true,
@@ -169,14 +171,12 @@ export default {
         hintOptions:{
           completeSingle: false
         },
-        keyMap: "emacs",
         matchBrackets: true,
         showCursorWhenSelecting: true,
         theme: "hopscotch",
         autoCloseBrackets: true,
-        readOnlyLines: [0, 4],
-        
-        extraKeys: { "Ctrl": "autocomplete" }
+        extraKeys: { "Ctrl": "autocomplete" },
+        keyMap: "sublime",
       }
     }
   },
@@ -203,7 +203,7 @@ export default {
         for (var i in snapshot.val()) {
           this_.taskData = snapshot.val()[i]
           var testcase = this_.taskData.testcase[0].input
-          var functionName = this_.taskData.testcase[0].function
+          var functionName = this_.taskData.functionName
           var func = []
           var argName = []
           var argValue = []
@@ -214,7 +214,7 @@ export default {
           }
           this_.functionName = functionName
           this_.argName = argName
-          func.push("def " + functionName + " (" + argName.join(', ') + "): \n # your code here")
+          func.push("def " + functionName + " (" + argName.join(', ') + "):\n\t#your code here")
           this_.code = func.join("\n\n\n")
 
           // Created point
