@@ -144,6 +144,7 @@
 
 import { mapState } from 'vuex'
 import firebase from 'firebase'
+import axios from 'axios'
 // import someResource from 'codemirror/some-resource'
 export default {
   name: 'practiceTask',
@@ -304,6 +305,14 @@ export default {
       const taskData = this.taskData
       const crossData = {'userCode': userCode, 'taskData': taskData}
       console.log(JSON.stringify(crossData))
+
+      // Request data from python server
+      var path = "http://localhost:5000"
+      axios.post(path, crossData).then( response => {
+        console.log(response)
+      }).catch( error => {
+        console.log('Error -> '+ error)
+      })
 
     }
   }
