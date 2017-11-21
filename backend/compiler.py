@@ -45,7 +45,7 @@ class Code:
         func = 'self.' + self.name
         # for v in INPUT:
         #     print(*v.values())
-        b = '(' + ', '.join('\''+str(*list(*v.values()))+'\'' if isinstance(*list(*v.values()), str) else str(*list(*v.values())) for v in INPUT) + ')'
+        b = '(' + ', '.join('\'' + str(*list(*v.values())) + '\'' if isinstance(*list(*v.values()), str) else str(*list(*v.values())) for v in INPUT) + ')'
         print(func+b)
         try:
             OUT = eval(func+b)
