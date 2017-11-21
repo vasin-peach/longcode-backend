@@ -356,7 +356,8 @@ export default {
               if (pass) {
                 swal({
                   title: 'Reward',
-                  html: '<img src="' + imgPath + '">' + '<h3>' + this_.point + '</h3>' 
+                  imageUrl: 'https://unsplash.it/400/200',
+                  html: '<h3>' + this_.point + '</h3>' 
                   
                 })
               }

@@ -202,11 +202,11 @@ export default {
       swal({
         title: 'Remove Task',
         text: 'คุณต้องการลบ Task นี้หรือไม่?',
-        icon: 'warning',
-        buttons: true,
-        dangerMode: true
-      }).then((willDelete) => {
-        if (willDelete) {
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes!',
+      }).then((result) => {
+        if (result.value) {
           firebase.database().ref('/tasks').orderByChild('createdAt').equalTo(id).once('value').then(function(snapshot) {
             snapshot.forEach(function(childSnapshot) {
               firebase.database().ref('/tasks').child(childSnapshot.key).remove().then(function() {
