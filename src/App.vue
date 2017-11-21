@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <transition name="loading-transition">
-      <div class="">
+      <div>
         <router-view name="header"></router-view>
         <router-view name="body"></router-view>
       </div>
     </transition>
     <transition name="loading-transition">
-      <div class="page-loading" v-if="userAuth && !userData">
+      <div class="page-loading" v-if="(userAuth && !userData) || (userAuth && loading)">
         <div class="page-loading-fade">
         </div>
         <div class="page-loading-icon">
@@ -30,7 +30,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'app',
   computed: {
-    ...mapState(['userAuth', 'userData']),
+    ...mapState(['userAuth', 'userData', 'loading']),
   },
   created() {
     // Auth autoload
@@ -141,10 +141,11 @@ body, html {
   min-height: 100%;
 }
   .page-loading-spiner {
+    z-index: 2;
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Safari */
     transform: translate(-50%, -50%);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
   }
@@ -165,10 +166,11 @@ body, html {
     }
 
   .page-loading-icon {
+    z-index: 2;
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Safari */
     transform: translate(-50%, -50%);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     background: #DFDCE3;
@@ -180,17 +182,19 @@ body, html {
     }
 
   .page-loading-label {
+    z-index: 2;
     -ms-transform: translate(-50%, -50%); /* IE 9 */
     -webkit-transform: translate(-50%, -50%); /* Safari */
     transform: translate(-50%, -50%);
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     margin-top: 70px;
     color: #DFDCE3;
   }
   .page-loading-fade {
-    position: absolute;
+    z-index: 2;
+    position: fixed;
     top: 0; bottom: 0;
     left: 0; right: 0;
     background: rgba(24, 18, 30, 0.9);

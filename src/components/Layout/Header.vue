@@ -25,9 +25,9 @@
           <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'scoreboard'}"><strong :class="{ 'disabled': !userAuth }"><i class="fa fa-star" aria-hidden="true"></i> SCORE BOARD</strong></router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link class="nav-link" :to="{ name: 'mytask'}"><strong :class="{ 'disabled': !userAuth }"><i class="fa fa-code" aria-hidden="true"></i> MY TASK</strong></router-link>
-          </li>
+          </li> -->
 
           <!-- Mobile menu -->
           <li class="nav-item sm">

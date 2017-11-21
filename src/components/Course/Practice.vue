@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="practice col-md-11 col-lg-9">
         <div class="text-left"><strong style="color: #233237;">PRACTICE TASKS</strong></div>
-        <hr>
+        <hr style="border-color: #EAC67A">
         <div class="row" v-for="task in practiceList">
           <div class="col">
             <router-link :to="'/practice/' + task.createdAt">
@@ -14,7 +14,7 @@
                     <strong>{{ task.name }}</strong>
                   </div>
                   <div class="col col-lg-4 text-right">
-                    {{ task.send / task.pass * 60 }} <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
+                    {{ Math.round((task.send / task.pass * 60) / 10) * 10 }} <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
                   </div>
                 </div>
               </div>
@@ -22,6 +22,7 @@
             </router-link>
           </div>
         </div>
+        <br><br><hr style="border-color: #D94B3F">
       </div>
     </div>
   </div>

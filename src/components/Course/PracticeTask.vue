@@ -1,6 +1,5 @@
 <template>
   <div v-if="taskData" class="task-container">
-    
     <div class="practiceTask row">
         <div class="taskDetail col-lg text-left">
           <div class="detail-nav ">
@@ -147,7 +146,7 @@
   require('codemirror/keymap/emacs.js')
 
 
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import firebase from 'firebase'
 import axios from 'axios'
 import swal from 'sweetalert2'
@@ -206,6 +205,7 @@ export default {
     this.screenFull()
   },
   methods: {
+    ...mapMutations(['userDataFetch', 'loading']),
     taskLoad() {
       const this_ = this
       firebase.database().ref('/tasks').orderByChild('createdAt').equalTo(parseInt(this.taskId)).once('value').then( function(snapshot) {
@@ -228,7 +228,7 @@ export default {
           this_.code = func.join("\n\n\n")
 
           // Created point
-          this_.point = (this_.taskData.send / this_.taskData.pass) * 60
+          this_.point = Math.round( ((this_.taskData.send / this_.taskData.pass) * 60) / 10 ) * 10
           if (!this_.point) {
             this_.point = 100
           }
@@ -285,27 +285,44 @@ export default {
       // Add this task in user data
       var query = '/users/' + this_.userData.authId
       var updates = {}
-      updates[query + '/enroll'] = this_.taskId
+      var taskUpdate = {}
+      taskUpdate[this_.taskId] = {'status' : 'doing'}
+      updates[query + '/enroll'] = taskUpdate
       firebase.database().ref(query).once('value').then(function(snapshot) {
-        var enroll = snapshot.val().enroll
-        if (!enroll) {
+
+        // never been
+        if (!snapshot.val().enroll) {
           firebase.database().ref().update(updates)
           // task increase send
           var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
           taskSend.transaction(function(send) {
             return send + 1
           })
-        } else if (enroll.indexOf(this_.taskId) == -1) {
-          // user enroll
-          var newEnroll = []
-          newEnroll = newEnroll.concat(snapshot.val().enroll).concat(this_.taskId)
-          firebase.database().ref(query + '/enroll').set(newEnroll)
+        } else {
+          var enroll = snapshot.val().enroll
+          var enrollFound = true
+          
+          // check current task is in user enroll
+          for (var i in enroll) {
+            for (var x in enroll[i]) {
+              if (x == this_.taskId) {
+                enrollFound = false
+              }
+            }
+          }
+          
+          if (enrollFound) {
+            // user enroll
+            var newEnroll = []
+            newEnroll = newEnroll.concat(snapshot.val().enroll).concat(taskUpdate)
+            firebase.database().ref(query + '/enroll').set(newEnroll)
 
-          // task increase send
-          var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
-          taskSend.transaction(function(send) {
-            return send + 1
-          })
+            // task increase send
+            var taskSend = firebase.database().ref('tasks/' + this_.taskData.taskId + '/send')
+            taskSend.transaction(function(send) {
+              return send + 1
+            })
+          }
         }
       })
 
@@ -313,12 +330,16 @@ export default {
       const userCode = this.code
       const taskData = this.taskData
       const crossData = {'userCode': userCode, 'taskData': taskData}
-      console.log(JSON.stringify(crossData))
+      // console.log(JSON.stringify(crossData))
 
       // Request data from python server
       var path = "http://grabkeys.net:5000"
+      // Load loading animate
+      this.loading(true);
+
       axios.post(path, crossData).then( response => {
-        console.log(response.data)
+        // Close loading animate
+        this.loading(false);
         var caseSet = []
         var found = true
         var pass = true
@@ -344,22 +365,64 @@ export default {
             } else {
               found = false
             }
-
           }
           if (found) {
-            var imgPath = '../../assets/icon/point.png'
             swal({
               title: 'Task',
               type: pass?'success':'warning',
               html: caseSet.join('<br>')
             }).then(function() {
               if (pass) {
-                swal({
-                  title: 'Reward',
-                  imageUrl: 'https://unsplash.it/400/200',
-                  html: '<h3>' + this_.point + '</h3>' 
-                  
-                })
+                var userTaskCheck = true
+                var userEnroll = this_.userData.enroll
+                var currentEnrollX = null
+                var currentEnrollI = null
+                for (var i in userEnroll) {
+                  for (var x in userEnroll[i]) {
+                    if (x == this_.taskId) {
+                      currentEnrollX = x
+                      currentEnrollI = i
+                      for (var z in userEnroll[i][x]) {
+                        if (userEnroll[i][x][z] == 'finish') {
+                          userTaskCheck = false
+                        } 
+                      }
+                    }
+                  }
+                }
+                if (userTaskCheck) {
+                  swal({
+                    title: 'Reward',
+                    imageUrl: 'https://grabkeys.net/storage/images/longcode/point.png',
+                    html: '<h3>' + this_.point + '</h3>' 
+                  }).then(function() {
+                    
+                    // update user enroll status
+                    var enrollStatusQuery = 'users/' + this_.userData.authId + '/enroll/' + currentEnrollI + '/' + currentEnrollX + '/status'
+                    var enrollStatus = firebase.database().ref(enrollStatusQuery)
+                    enrollStatus.transaction(function(status) {
+                      return 'finish'
+                    })
+
+                    // update task enroll pass
+                    var taskPass = firebase.database().ref('tasks/' + this_.taskData.taskId + '/pass')
+                    taskPass.transaction(function(pass) {
+                      return pass + 1
+                    })
+                    // update user point
+                    var userPoint = firebase.database().ref('users/' + this_.userData.authId + '/point')
+                    userPoint.transaction(function(point) {
+                      return point + this_.point
+                    })
+                    this_.userDataFetch()
+                  })
+                } else {
+                  swal({
+                    title: 'Redo',
+                    html: 'คุณจะไม่ได้คะแนน เรื่องจากคุณทำข้อนี้ไป',
+                    type: 'warning'
+                  })
+                }
               }
             })
           } else {
@@ -399,7 +462,8 @@ export default {
       margin: 0;
     }
     .taskDetail {
-      z-index: 10 !important;
+      /* z-index: 10 !important; */
+      z-index: 1;
       background: #f2f2f2;
       min-height: 100%;
     }
@@ -454,6 +518,7 @@ export default {
     }
 
   .CodeMirror {
+    z-index: 1;
     min-height: 100%;
   }
 </style>

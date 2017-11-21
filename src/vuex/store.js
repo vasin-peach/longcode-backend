@@ -13,8 +13,21 @@ const state = {
     userAuth: null,
     userData: null,
     practiceList: null,
+    loading: false,
 }
 const mutations = {
+
+    loading(state, set) {
+        state.loading = set
+    },
+    // fetch user data
+    userDataFetch() {
+        firebase.database().ref('/users').orderByChild('email').equalTo(state.userAuth.email).once('value').then(function(snapshot) {
+            for (var i in snapshot.val()) {
+                state.userData = snapshot.val()[i]
+            }
+        })
+    },
     // Firebase auth state
     auth(state) {
         firebase.auth().onAuthStateChanged( function(user) {
@@ -110,9 +123,6 @@ const mutations = {
         })
     }
 }
-
-
-
 
 
 
