@@ -6,6 +6,8 @@ import router from './router'
 import store from './vuex/store'
 import VeeValidate from 'vee-validate'
 import VueCodeMirror from 'vue-codemirror'
+import swal from 'sweetalert2'
+
 Vue.use(VueCodeMirror)
 Vue.use(VeeValidate)
 Vue.config.productionTip = false

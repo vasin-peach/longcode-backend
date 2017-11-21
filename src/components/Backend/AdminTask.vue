@@ -138,6 +138,7 @@
 <script>
 import { mapState, mapMutations } from 'vuex'
 import firebase from 'firebase'
+import swal from 'sweetalert2'
 export default {
   name: 'adminTask',
   data() {

@@ -1,5 +1,6 @@
 <template>
   <div v-if="taskData" class="task-container">
+    
     <div class="practiceTask row">
         <div class="taskDetail col-lg text-left">
           <div class="detail-nav ">
@@ -149,6 +150,7 @@
 import { mapState } from 'vuex'
 import firebase from 'firebase'
 import axios from 'axios'
+import swal from 'sweetalert2'
 // import someResource from 'codemirror/some-resource'
 export default {
   name: 'practiceTask',
@@ -159,6 +161,7 @@ export default {
       taskLength: 0,
       functionName: null,
       argName: null,
+      fail: null,
       point: 60,
       difficulty: 'easy',
       code: 'hi',
@@ -313,9 +316,61 @@ export default {
       console.log(JSON.stringify(crossData))
 
       // Request data from python server
-      var path = "http://localhost:5000"
+      var path = "http://grabkeys.net:5000"
       axios.post(path, crossData).then( response => {
-        console.log(response)
+        console.log(response.data)
+        var caseSet = []
+        var found = true
+        var pass = true
+          for (var i in response.data) {
+            var currentData = response.data[i]
+            if (currentData instanceof Array) {
+              var caseName = 'Case' + (currentData[0] + 1) + ': '
+
+              // SyntaxError
+              if (currentData[1] == -2) {
+                caseSet.push(caseName + ('<span style="color:orange">' + currentData[2] + '</span>'))
+                pass &= false
+              } else {
+                var re = currentData[1]
+                pass &= re == 1?true: re==0?false:false
+                caseSet.push(caseName + (
+                re == 1?'<span style="color:green">Pass</span>'
+                : re==0?'<span style="color:red">Wrong</span>'
+                : '<span style="color:red">Timeout</span>'))
+              }
+
+            // Code not found
+            } else {
+              found = false
+            }
+
+          }
+          if (found) {
+            var imgPath = '../../assets/icon/point.png'
+            swal({
+              title: 'Task',
+              type: pass?'success':'warning',
+              html: caseSet.join('<br>')
+            }).then(function() {
+              if (pass) {
+                swal({
+                  title: 'Reward',
+                  html: '<img src="' + imgPath + '">' + '<h3>' + this_.point + '</h3>' 
+                  
+                })
+              }
+            })
+          } else {
+            swal({
+              title: 'Task',
+              type: 'error',
+              html: 'Code not found'
+            })
+          }
+          if (pass) {
+            // Update t
+          }
       }).catch( error => {
         console.log('Error -> '+ error)
       })

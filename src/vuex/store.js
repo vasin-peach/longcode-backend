@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import firebase from 'firebase'
 import { firebaseConfig } from '../../config/firebase-config.js'
-
-import swal from 'sweetalert'
-
+import swal from 'sweetalert2'
 
 Vue.use(Vuex)
 firebase.initializeApp(firebaseConfig);  
