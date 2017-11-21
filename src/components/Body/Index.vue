@@ -244,9 +244,9 @@ export default {
     transform: translate(-50%, -50%);
     }
   }
-  @media only screen and (max-width: 320px) {
+  @media only screen and (min-width: 320px) {
     .index-login {
-      margin-top: 30px;
+      margin-top: 35px;
     }
   }
   .index-landing .card{
