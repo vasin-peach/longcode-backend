@@ -1,5 +1,5 @@
-# from pathos.helpers import mp as thread
-import multiprocessing as thread
+from pathos.helpers import mp as thread
+# import multiprocessing as thread
 
 path = 'test3.txt'
 
