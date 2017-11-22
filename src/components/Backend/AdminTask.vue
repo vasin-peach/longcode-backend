@@ -223,11 +223,13 @@ export default {
       for (var x=1; x<this.testcase + 1; x++) { // all testcase
         var allInput = []
         for (var input in this.taskInputValue) { // all input
+          var hashInput = input.split('-')
+          var inputName = this.taskInputName[hashInput[1]]
           var dictInput = []
           if (input.split('-')[0] == x) { // select input in this testcase.
             var y = 1
             var inputValue = this.taskInputValue[input]
-            var inputName = this.taskInputName[y]
+            // var inputName = this.taskInputName[y]
             var filterValue = []
             y += 1
             if (inputValue.startsWith('"') && inputValue.endsWith('"')) {
