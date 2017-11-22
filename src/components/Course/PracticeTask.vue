@@ -23,7 +23,7 @@
                 <div style="word-break: break-all; letter-spacing: 0.5px;">
                   <strong>Description:</strong> 
                 <div style="background: #e6e6e6; border-radius: 3px;">
-                  <p style="text-indent: 10px; padding: 5px;">{{ taskData.detail }}</p>
+                  <p style="text-indent: 10px; padding: 5px; white-space: pre;">{{ taskData.detail }}</p>
                 </div>
                 </div>
                 <br>
@@ -70,7 +70,7 @@
                           </span> 
                         </li>
                         <li>
-                          Output: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{ testcase.output }}</strong>
+                          Output: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;"><pre>{{ testcase.output }}</pre></strong>
                         </li>
                       </ul>
                     </div>
@@ -208,6 +208,7 @@ export default {
   },
   updated() {
     this.screenFull()
+    
   },
   methods: {
     ...mapMutations(['userDataFetch', 'loading', 'auth']),
