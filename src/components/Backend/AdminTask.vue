@@ -51,7 +51,7 @@
                         </div>
                         <div class="row">
                           <div class="col-sm-4">
-                            <input v-model="taskInputName[count +'-'+ currentInput]" class="form-control" placeholder="input name" required>
+                            <input v-model="taskInputName[currentInput]" class="form-control" placeholder="input name" required>
                           </div>
                           <div class="col-sm-8">
                              <input v-model="taskInputValue[count +'-'+ currentInput]" class="form-control" placeholder="value" required>
@@ -225,9 +225,11 @@ export default {
         for (var input in this.taskInputValue) { // all input
           var dictInput = []
           if (input.split('-')[0] == x) { // select input in this testcase.
+            var y = 1
             var inputValue = this.taskInputValue[input]
-            var inputName = this.taskInputName[input].toString()
+            var inputName = this.taskInputName[y]
             var filterValue = []
+            y += 1
             if (inputValue.startsWith('"') && inputValue.endsWith('"')) {
               inputValue = String(inputValue).replace(/['"]+/g, '')
             } else if(!isNaN(inputValue)) {

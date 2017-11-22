@@ -21,7 +21,10 @@
                 <div class="text-center"><h4><strong>{{ taskData.name}}</strong></h4></div>
                 <hr style="border-color: #D94B3F">
                 <div style="word-break: break-all; letter-spacing: 0.5px;">
-                  <strong>Description:</strong> <p style="text-indent: 10px;">{{ taskData.detail }}</p>
+                  <strong>Description:</strong> 
+                <div style="background: #e6e6e6; border-radius: 3px;">
+                  <p style="text-indent: 10px;">{{ taskData.detail }}</p>
+                </div>
                 </div>
                 <br>
                 <div>
