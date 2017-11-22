@@ -1,5 +1,5 @@
 <template>
-  <div v-if="userAuth && userData">
+  <div v-if="userAuth && userData && userEnroll">
     <div class="row justify-content-center">
       <div class="practice col-md-11 col-lg-9">
         <div class="text-left"><strong style="color: #233237;">PRACTICE TASKS</strong></div>
@@ -7,11 +7,11 @@
         <div class="row" v-for="task in practiceList">
           <div class="col">
             <router-link :to="'/practice/' + task.createdAt">
-            <div class="card task-practice" :class="{'taskPass': userEnroll.indexOf(task.createdAt + '') >= 0}">
+            <div class="card task-practice" :class="{'taskPass': taskPass.indexOf(task.createdAt + '') >= 0}">
               <div class="card-header">
                 <div class="row">
                   <div class="col col-lg-8 text-left">
-                    <strong>{{ task.name }} <i style="color: #009933" class="fa fa-check" aria-hidden="true" v-if="userEnroll.indexOf(task.createdAt + '') >= 0"></i></strong>
+                    <strong>{{ task.name }} <i style="color: #009933" class="fa fa-check" aria-hidden="true" v-if="taskPass.indexOf(task.createdAt + '') >= 0"></i></strong>
                   </div>
                   <div class="col col-lg-4 text-right">
                     {{ Math.round((task.send / task.pass * 60) / 10) * 10 }} <img src="../../assets/icon/point.png" style="width: 25px; border-radius: 50%;">
@@ -39,25 +39,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userAuth', 'userData', 'practiceList'])
+    ...mapState(['userAuth', 'userData', 'practiceList', 'taskPass'])
   },
   created() {
-    const this_ = this
     this.practiceLoad()
-
-    // If user enroll
-    var userHasEnroll = []
-    if (this.userData.enroll) {
-      var userEnroll = this.userData.enroll
-      for (var i in userEnroll) {
-        for (var x in userEnroll[i]) {
-          if (userEnroll[i][x].status == 'finish') {
-            this_.userEnroll.push(x)
-          }
-        }
-      }
-    }
-
   },
   methods: {
     practiceLoad() {

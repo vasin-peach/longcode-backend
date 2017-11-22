@@ -14,6 +14,7 @@ const state = {
     userData: null,
     practiceList: null,
     loading: false,
+    taskPass: []
 }
 const mutations = {
 
@@ -45,7 +46,6 @@ const mutations = {
                         // Create user data in firebase
                         var userKey = firebase.database().ref('users').push().key
                         var updates = {}
-                    
                         const userData = {
                             name: user.displayName,
                             email: user.email,
@@ -67,9 +67,24 @@ const mutations = {
                             }
                         })
                     } else {
+
                         for (var i in snapshot.val()) {
                             state.userData = snapshot.val()[i]
+                            // Get user tasks finish
+                            if (state.userData != undefined) {
+                                var userEnroll = state.userData.enroll
+                                for (var i in userEnroll) {
+                                    for (var x in userEnroll[i]) {
+                                        if (userEnroll[i][x].status == 'finish') {
+                                            state.taskPass.push(x)
+                                        }
+                                    }
+                                }
+                            }
                         }
+
+
+
                     }
                 })
             }

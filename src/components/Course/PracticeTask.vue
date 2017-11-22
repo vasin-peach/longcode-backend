@@ -158,6 +158,8 @@ export default {
   name: 'practiceTask',
   data() {
     return {
+      currentEnrollX: null,
+      currentEnrollI: null,
       taskId: this.$route.params.taskId,
       taskData: null,
       taskLength: 0,
@@ -208,7 +210,7 @@ export default {
     this.screenFull()
   },
   methods: {
-    ...mapMutations(['userDataFetch', 'loading']),
+    ...mapMutations(['userDataFetch', 'loading', 'auth']),
     taskLoad() {
       const this_ = this
       firebase.database().ref('/tasks').orderByChild('createdAt').equalTo(parseInt(this.taskId)).once('value').then( function(snapshot) {
@@ -290,7 +292,7 @@ export default {
       var updates = {}
       var taskUpdate = {}
       taskUpdate[this_.taskId] = {'status' : 'doing'}
-      updates[query + '/enroll'] = taskUpdate
+      updates[query + '/enroll'] = [taskUpdate]
       firebase.database().ref(query).once('value').then(function(snapshot) {
 
         // never been
@@ -329,7 +331,7 @@ export default {
         }
       })
 
-
+      this_.userDataFetch()
       const userCode = this.code
       const taskData = this.taskData
       const crossData = {'userCode': userCode, 'taskData': taskData}
@@ -378,13 +380,9 @@ export default {
               if (pass) {
                 var userTaskCheck = true
                 var userEnroll = this_.userData.enroll
-                var currentEnrollX = null
-                var currentEnrollI = null
                 for (var i in userEnroll) {
                   for (var x in userEnroll[i]) {
                     if (x == this_.taskId) {
-                      currentEnrollX = x
-                      currentEnrollI = i
                       for (var z in userEnroll[i][x]) {
                         if (userEnroll[i][x][z] == 'finish') {
                           userTaskCheck = false
@@ -400,6 +398,17 @@ export default {
                     html: '<h3>' + this_.point + '</h3>' 
                   }).then(function() {
                     
+                    var userEnroll = this_.userData.enroll
+                    var currentEnrollX = null
+                    var currentEnrollI = null
+                    for (var i in userEnroll) {
+                      for (var x in userEnroll[i]) {
+                        if (x == this_.taskId) {
+                          currentEnrollX = x
+                          currentEnrollI = i
+                        }
+                      }
+                    }
                     // update user enroll status
                     var enrollStatusQuery = 'users/' + this_.userData.authId + '/enroll/' + currentEnrollI + '/' + currentEnrollX + '/status'
                     var enrollStatus = firebase.database().ref(enrollStatusQuery)
@@ -418,6 +427,7 @@ export default {
                       return point + this_.point
                     })
                     this_.userDataFetch()
+                    this_.auth()
                   })
                 } else {
                   swal({

@@ -30,7 +30,7 @@ import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'app',
   computed: {
-    ...mapState(['userAuth', 'userData', 'loading']),
+    ...mapState(['userAuth', 'userData', 'loading',]),
   },
   created() {
     // Auth autoload
