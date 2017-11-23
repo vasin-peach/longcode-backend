@@ -14,7 +14,7 @@
                     Practice
                   </div>
                   <div class="card-block-body card-block-practice-body">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                    แหล่งรวมโจทย์เพื่อฝึกฝน
                     <hr style="border-color: #EAC67A">
                     <div class="text-right">
                       <strong class="btn">View</strong>
@@ -25,15 +25,15 @@
             </router-link>
           </div>
 
-          <!-- Challenges -->
-          <div class="col-lg-6">
+          <!-- Discuss -->
+          <div class="col-lg-6 disabled">
             <div class="card card-challenges">
               <div class="card-block">
                 <div class="card-block-header card-block-challenges-header">
-                  Challenges
+                  Discuss
                 </div>
                 <div class="card-block-body card-block-challenges-body">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  ส่วนแลกเปลี่ยนความคิดหรือความคิดเห็น
                   <hr style="border-color: #EAC67A">
                   <div class="text-right">
                     <strong class="btn">View</strong>
@@ -45,14 +45,14 @@
 
 
           <!-- Tournaments -->
-          <div class="col-lg-6">
+          <div class="col-lg-6 disabled">
             <div class="card card-tournaments">
               <div class="card-block">
                 <div class="card-block-header card-block-tournaments-header">
                   Tournaments
                 </div>
                 <div class="card-block-body card-block-tournaments-body">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  เป็นอีเว้นที่ใครคิดว่าแน่ก็มาลองแข่งกันได้
                   <hr style="border-color: #EAC67A">
                   <div class="text-right">
                     <strong class="btn">View</strong>
@@ -63,15 +63,15 @@
           </div>
 
 
-          <!-- Arcade -->
-          <div class="col-lg-6">
+          <!-- Classroom -->
+          <div class="col-lg-6 disabled">
             <div class="card card-arcade">
               <div class="card-block">
                 <div class="card-block-header card-block-arcade-header">
-                  Arcade
+                  Classroom
                 </div>
                 <div class="card-block-body card-block-arcade-body">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  สร้างห้องเรียนของตัวเอง
                   <hr style="border-color: #EAC67A">
                   <div class="text-right">
                     <strong class="btn">View</strong>
@@ -252,7 +252,7 @@ export default {
   .index-landing .card{
     margin-bottom: 3%;
     border-radius: 3px;
-    box-shadow: 0 1px 1px 0 #18121E;
+    box-shadow: 0 1px 2px 0 #18121E;
     -webkit-transition: transform 0.3s ease, box-shadow 0.3s ease;
     -moz-transition: transform 0.3s ease, box-shadow 0.3s ease;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -263,7 +263,7 @@ export default {
       -ms-transform: translateY(-2%);
       -webkit-transform: translateY(-2%);
       transform: translateY(-2%);
-      box-shadow: 0 2px 2px 0 #18121E;
+      box-shadow: 0 2px 2px 1px #18121E;
     }
 
     .card-block-header {
@@ -272,28 +272,28 @@ export default {
       color: #f2f2f2;
     }
       .card-block-practice-header {
-        background: -webkit-linear-gradient(to top, #18121E, #009999);
-        background: -o-linear-gradient(to top, #18121E, #009999);  
-        background: -moz-linear-gradient(to top, #18121E, #009999);
-        background: linear-gradient(to top, #18121E, #009999);
+        background: -webkit-linear-gradient(to right, #392B47, #009999);
+        background: -o-linear-gradient(to right, #392B47, #009999);  
+        background: -moz-linear-gradient(to right, #392B47, #009999);
+        background: linear-gradient(to right, #392B47, #009999);
       }
       .card-block-challenges-header {
-        background: -webkit-linear-gradient(to top, #d5382a , #EAC67A);
-        background: -o-linear-gradient(to top, #d5382a , #EAC67A);  
-        background: -moz-linear-gradient(to top, #d5382a , #EAC67A);
-        background: linear-gradient(to top, #d5382a , #EAC67A);
+        background: -webkit-linear-gradient(to right, #d5382a , #EAC67A);
+        background: -o-linear-gradient(to right, #d5382a , #EAC67A);  
+        background: -moz-linear-gradient(to right, #d5382a , #EAC67A);
+        background: linear-gradient(to right, #d5382a , #EAC67A);
       }
       .card-block-tournaments-header {
-        background: -webkit-linear-gradient(to top, #ff3385, #ff8080);
-        background: -o-linear-gradient(to top, #ff3385, #ff8080);  
-        background: -moz-linear-gradient(to top, #ff3385, #ff8080);
-        background: linear-gradient(to top, #ff3385, #ff8080);
+        background: -webkit-linear-gradient(to right, #ff3385, #ff8080);
+        background: -o-linear-gradient(to right, #ff3385, #ff8080);  
+        background: -moz-linear-gradient(to right, #ff3385, #ff8080);
+        background: linear-gradient(to right, #ff3385, #ff8080);
       }
       .card-block-arcade-header {
-        background: -webkit-linear-gradient(to top, #3366ff, #aa80ff);
-        background: -o-linear-gradient(to top, #3366ff, #aa80ff);  
-        background: -moz-linear-gradient(to top, #3366ff, #aa80ff);
-        background: linear-gradient(to top, #3366ff, #aa80ff);
+        background: -webkit-linear-gradient(to right, #3366ff, #aa80ff);
+        background: -o-linear-gradient(to right, #3366ff, #aa80ff);  
+        background: -moz-linear-gradient(to right, #3366ff, #aa80ff);
+        background: linear-gradient(to right, #3366ff, #aa80ff);
       }
     .card-block-body {
       padding: 15px;
