@@ -53,12 +53,12 @@ class Code:
             if str(OUT) == str(EXPECTED):
                 print('case%d: Passed' % (case+1))
                 # self.update_result(1) # 1 for pass
-                ans.put([case, 1])
+                ans.put([case, 1, OUT])
                 # return 1
             else:
                 print('case%d: Wrong Answer' % (case+1))
                 # self.update_result(0) # 0 for not pass
-                ans.put([case, 0])
+                ans.put([case, 0, OUT])
                 # return 0
         except Exception as e:
             print('case%d: %s' % (case+1, e)) 
