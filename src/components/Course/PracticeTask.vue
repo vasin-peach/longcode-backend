@@ -70,7 +70,7 @@
                           </span> 
                         </li>
                         <li>
-                          Output: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;"><pre>{{ testcase.output }}</pre></strong>
+                          Output: <strong style="color: #4b4257; background: #e6e6e6; padding: 2px 5px;">{{ testcase.output }}</strong>
                         </li>
                       </ul>
                     </div>
@@ -363,7 +363,7 @@ export default {
                 pass &= re == 1?true: re==0?false:false
                 caseSet.push(caseName + (
                 re == 1?'<span style="color:green">Pass</span>'
-                : re==0?'<span style="color:red">Wrong</span>'
+                : re==0?'<span style="color:red">Wrong</span><br><span>Your Answer: ' + currentData[2] +' </span>'
                 : '<span style="color:red">Timeout</span>'))
               }
 
