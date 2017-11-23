@@ -76,7 +76,7 @@ class Code:
             ****************
         '''
         if self.Error:
-            return [-1, -2, str(self.ee)]
+            return [[-1, -2, str(self.ee)]]
         ans = thread.Queue()
         job = []
         for case in range(len(self.input)):
