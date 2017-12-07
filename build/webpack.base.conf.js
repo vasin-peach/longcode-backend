@@ -38,8 +38,16 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            "presets": [
+              ["stage-2"],
+              ["es2015",  {"modules": false}]
+            ]
+          }
+        }
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
