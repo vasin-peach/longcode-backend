@@ -123,7 +123,7 @@ const mutations = {
           });
       })
       .catch(function(error) {
-        console.log(error.email);
+        console.log(error);
         firebase
           .auth()
           .fetchProvidersForEmail(error.email)
