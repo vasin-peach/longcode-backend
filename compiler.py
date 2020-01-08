@@ -6,6 +6,8 @@ path = 'test3.txt'
 class Code:
     
     def __init__(self, data):
+        if not data: return 
+
         #------------------------------------#
         # exec function useff only in class
         v = {}
